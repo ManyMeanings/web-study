@@ -40,6 +40,9 @@
 - [40. 什么是层叠上下文？](#40-什么是层叠上下文)
 - [41. 如何实现单行/多行文本溢出的省略？](#41-如何实现单行多行文本溢出的省略)
 - [42. 常见的元素隐藏方式？](#42-常见的元素隐藏方式)
+- [43. 主流浏览器内核私有属性 css 前缀？](#43-主流浏览器内核私有属性-css-前缀)
+- [44. css reset 和 normalize.css 有什么区别？](#44-css-reset-和-normalizecss-有什么区别)
+- [45. offsetWidth/offsetHeight,clientWidth/clientHeight 与 scrollWidth/scrollHeight 的区别？](#45-offsetwidthoffsetheightclientwidthclientheight-与-scrollwidthscrollheight-的区别)
 
 ### 1. 介绍一下标准的 CSS 的盒子模型？低版本 IE 的盒子模型有什么不同？
 
@@ -549,3 +552,24 @@ p:after {
 - 通过 z-index 负值，来使其他元素遮盖住该元素，以此来实现隐藏。
 - 通过 clip/clip-path 元素裁剪的方法来实现元素的隐藏，这种方法下，元素仍在页面中占据位置，但是不会响应绑定的监听事件。
 - 通过 transform:scale(0,0)来将元素缩放为 0，以此来实现元素的隐藏。这种方法下，元素仍在页面中占据位置，但是不会响应绑定的监听事件。
+
+### 43. 主流浏览器内核私有属性 css 前缀？
+
+- mozilla 内核 （firefox,flock 等） -moz
+- webkit 内核 （safari,chrome 等） -webkit
+- opera 内核 （opera 浏览器） -o
+- trident 内核 （ie 浏览器） -ms
+
+### 44. css reset 和 normalize.css 有什么区别？
+
+css reset 是最早的一种解决浏览器间样式不兼容问题的方案，它的基本思想是将浏览器的所有样式都重置掉，从而达到所有浏览器样式保持一致的效果。但是使用这种方法，可能会带来一些性能上的问题，并且对于一些元素的不必要的样式的重置，其实反而会造成画蛇添足的效果。
+
+后面出现一种更好的解决浏览器间样式不兼容的方法，就是 normalize.css ，它的思想是尽量的保留浏览器自带的样式，通过在原有的样式的基础上进行调整，来保持各个浏览器间的样式表现一致。相对与 css reset，normalize.css 的方法保留了有价值的默认值，并且修复了一些浏览器的 bug，而且使 normalize.css 不会造成元素复杂的继承链。
+
+### 45. offsetWidth/offsetHeight,clientWidth/clientHeight 与 scrollWidth/scrollHeight 的区别？
+
+clientWidth/clientHeight 返回的是元素的内部宽度，它的值只包含 content + padding，如果有滚动条，不包含滚动条。
+
+offsetWidth/offsetHeight 返回的是元素的布局宽度，它的值包含 content + padding + border 包含了滚动条。
+
+scrollWidth/scrollHeight 返回值包含 content + padding + 溢出内容的尺寸。
