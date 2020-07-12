@@ -310,13 +310,19 @@ margin 重叠指的是在垂直方向上，两个相邻元素的 margin 发生�
 
 BFC 指的是块级格式化上下文，一个元素形成了 BFC 之后，那么它内部元素产生的布局不会影响到外部元素，外部元素的布局也不会影响到 BFC 中的内部元素。一个 BFC 就像是一个隔离区域，和其他区域互不影响。
 
+特点：
+
+- BFC 内部的子元素，在垂直方向，边距会发生重叠。
+- BFC 在页面中是独立的容器，外面的元素不会影响里面的元素，反之亦然。
+- BFC 区域不与旁边的 float box 区域重叠。（可以用来清除浮动带来的影响）。
+- 在计算BFC的高度时，子元素的 float box 也会参与计算。
+
 BFC 元素：
 
-- 根元素或包含根元素的元素
+- overflow: 不为visible，可以让属性是 hidden、auto。
 - 浮动元素 float ＝ left|right 或 inherit（≠none）
 - 绝对定位元素 position ＝ absolute 或 fixed
 - display ＝ inline-block|flex|inline-flex|table-cell 或 table-caption
-- overflow ＝ hidden|auto 或 scroll(≠visible)
 
 ### 18. IFC（行级格式化上下文）是什么？
 
