@@ -22,13 +22,13 @@ git push origin master
 
 1. 基于 master 分支，创建一个新的分支，起名为`feature_item_recommend`。
 
-   ```bash
-   git checkout -b feature_item_recommend
+```bash
+git checkout -b feature_item_recommend
 
-   #上面这行命令相当于：
-   git branch feature_item_recommend
-   git checkout feature_item_recommend
-   ```
+#上面这行命令相当于：
+git branch feature_item_recommend
+git checkout feature_item_recommend
+```
 
 2. 在新的分支`feature_item_recommend`上完成开发工作，并 commit, push。
 3. 将分支`feature_item_recommend`上的开发进度合并到 master 分支。
