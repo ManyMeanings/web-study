@@ -1,4 +1,4 @@
-- [1. 介绍一下标准的 CSS 的盒子模型？低版本 IE 的盒子模型有什么不同？](#1-介绍一下标准的-css-的盒子模型低版本-ie-的盒子模型有什么不同)
+- [1. **介绍一下标准的 CSS 的盒子模型？低版本 IE 的盒子模型有什么不同？**](#1-介绍一下标准的-css-的盒子模型低版本-ie-的盒子模型有什么不同)
 - [2. CSS 选择器有哪些？](#2-css-选择器有哪些)
 - [3. CSS 中哪些属性可以继承？](#3-css-中哪些属性可以继承)
 - [4. CSS 优先级算法如何计算？](#4-css-优先级算法如何计算)
@@ -13,7 +13,7 @@
 - [13. `li`与`li`之间有看不见的空白间隔是什么原因引起的？有什么解决办法？](#13-li与li之间有看不见的空白间隔是什么原因引起的有什么解决办法)
 - [14. `width: auto`和`width: 100%`的区别?](#14-width-auto和width-100的区别)
 - [15. 简单介绍使用图片 base64 编码的优点和缺点。](#15-简单介绍使用图片-base64-编码的优点和缺点)
-- [16. margin 重叠问题的理解。](#16-margin-重叠问题的理解)
+- [16. **margin 重叠问题的理解。**](#16-margin-重叠问题的理解)
 - [17. 对 BFC 规范（块级格式化上下文：block formatting context）的理解？](#17-对-bfc-规范块级格式化上下文block-formatting-context的理解)
 - [18. IFC（行级格式化上下文）是什么？](#18-ifc行级格式化上下文是什么)
 - [19. CSS 优化、提高性能的方法有哪些？](#19-css-优化提高性能的方法有哪些)
@@ -44,7 +44,7 @@
 - [44. css reset 和 normalize.css 有什么区别？](#44-css-reset-和-normalizecss-有什么区别)
 - [45. offsetWidth/offsetHeight,clientWidth/clientHeight 与 scrollWidth/scrollHeight 的区别？](#45-offsetwidthoffsetheightclientwidthclientheight-与-scrollwidthscrollheight-的区别)
 
-### 1. 介绍一下标准的 CSS 的盒子模型？低版本 IE 的盒子模型有什么不同？
+### 1. **介绍一下标准的 CSS 的盒子模型？低版本 IE 的盒子模型有什么不同？**
 
 标准盒模型和 IE 盒模型的区别在于设置 width 和 height 时，所对应的范围不同。标准盒模型的 width 和 height 属性的范围只包含 content，而 IE 盒模型 width 和 height 属性的范围包含了 border、padding 和 content。
 
@@ -292,9 +292,9 @@ base64 编码是一种图片处理格式，通过特定的算法将图片编码�
 
 缺点：编码后的大小会比原文件大小大 1/3；无法直接缓存；兼容性的问题（ie8+）
 
-### 16. margin 重叠问题的理解。
+### 16. **margin 重叠问题的理解。**
 
-margin 重叠指的是在垂直方向上，两个相邻元素的 margin 发生重叠的情况。
+margin 重叠指的是标准文档流中，竖直方向的margin不叠加，只取较大的值作为margin
 
 一般来说可以分为四种情形：
 
@@ -315,11 +315,11 @@ BFC 指的是块级格式化上下文，一个元素形成了 BFC 之后，那�
 - BFC 内部的子元素，在垂直方向，边距会发生重叠。
 - BFC 在页面中是独立的容器，外面的元素不会影响里面的元素，反之亦然。
 - BFC 区域不与旁边的 float box 区域重叠。（可以用来清除浮动带来的影响）。
-- 在计算BFC的高度时，子元素的 float box 也会参与计算。
+- 在计算 BFC 的高度时，子元素的 float box 也会参与计算。
 
 BFC 元素：
 
-- overflow: 不为visible，可以让属性是 hidden、auto。
+- overflow: 不为 visible，可以让属性是 hidden、auto。
 - 浮动元素 float ＝ left|right 或 inherit（≠none）
 - 绝对定位元素 position ＝ absolute 或 fixed
 - display ＝ inline-block|flex|inline-flex|table-cell 或 table-caption
