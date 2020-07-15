@@ -43,6 +43,8 @@
 - [43. 主流浏览器内核私有属性 css 前缀？](#43-主流浏览器内核私有属性-css-前缀)
 - [44. css reset 和 normalize.css 有什么区别？](#44-css-reset-和-normalizecss-有什么区别)
 - [45. offsetWidth/offsetHeight,clientWidth/clientHeight 与 scrollWidth/scrollHeight 的区别？](#45-offsetwidthoffsetheightclientwidthclientheight-与-scrollwidthscrollheight-的区别)
+- [46. 浮动元素的特点？&#10084;](#46-浮动元素的特点)
+- [47. 如何清除浮动？&#10084;](#47-如何清除浮动)
 
 ### 1. 介绍一下 CSS 的盒子模型？&#10084;
 
@@ -578,3 +580,17 @@ clientWidth/clientHeight 返回的是元素的内部宽度，它的值只包含 
 offsetWidth/offsetHeight 返回的是元素的布局宽度，它的值包含 content + padding + border 包含了滚动条。
 
 scrollWidth/scrollHeight 返回值包含 content + padding + 溢出内容的尺寸。
+
+### 46. 浮动元素的特点？&#10084;
+
+- 浮动元素脱离标准流。
+- 浮动元素互相贴靠。
+- 浮动元素有“字围”效果。
+- 收缩：一个浮动的元素，如果没有设置 width，那么将自动收缩为内容的宽度。
+
+### 47. 如何清除浮动？&#10084;
+
+- 加高法：给浮动元素的父元素设置高度（大于浮动子元素的高度）。
+- 隔墙法：用`<div style="clear: both"></div>`隔开两个浮动的元素。
+- 内墙法：在浮动元的父元素里修一堵墙`<div style="clear: both"></div>`，使该元素被子元素撑出高度。
+- 给浮动元素的父元素设置属性`overflow: hidden;`。
