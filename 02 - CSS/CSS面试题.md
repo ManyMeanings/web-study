@@ -45,6 +45,7 @@
 - [45. offsetWidth/offsetHeight,clientWidth/clientHeight 与 scrollWidth/scrollHeight 的区别？](#45-offsetwidthoffsetheightclientwidthclientheight-与-scrollwidthscrollheight-的区别)
 - [46. 浮动元素的特点？&#10084;](#46-浮动元素的特点)
 - [47. 如何清除浮动？&#10084;](#47-如何清除浮动)
+- [48. 标准文档流的特性？](#48-标准文档流的特性)
 
 ### 1. 介绍一下 CSS 的盒子模型？&#10084;
 
@@ -135,18 +136,7 @@ div {
   background-color: red;
 }
 
-/*2. 利用绝对定位，确定容器的宽高，先将元素的左上角定位到页面的中心，然后再通过 margin 来调整元素的中心点到页面的中心。*/
-div {
-  position: absolute;
-  width: 500px;
-  height: 300px;
-  top: 50%;
-  left: 50%;
-  margin: -150px 0 0 -250px;
-  background-color: red;
-}
-
-/*3. 利用绝对定位,未知容器的宽高，利用 transform 属性*/
+/*2. 利用绝对定位,未知容器的宽高，利用 transform 属性*/
 div {
   position: absolute; /*相对定位或绝对定位均可*/
   width: 500px;
@@ -157,7 +147,7 @@ div {
   background-color: red;
 }
 
-/*4. 利用flex布局*/
+/*3. 利用flex布局*/
 .container {
   display: flex;
   align-items: center;
@@ -168,6 +158,17 @@ div {
   width: 100px;
   height: 100px;
   background-color: red;
+}
+
+/*4. flex + margin: auto*/
+.father {
+  display: flex;
+  min-height: 100vh;
+  background: pink;
+}
+.son {
+  margin: auto;
+  background: red;
 }
 ```
 
@@ -596,3 +597,9 @@ scrollWidth/scrollHeight 返回值包含 content + padding + 溢出内容的尺�
 - 隔墙法：用`<div style="clear: both"></div>`隔开两个浮动的元素。
 - 内墙法：在浮动元的父元素里修一堵墙`<div style="clear: both"></div>`，使该元素被子元素撑出高度。
 - 给浮动元素的父元素设置属性`overflow: hidden;`。
+
+### 48. 标准文档流的特性？
+
+- 空白折叠：无论多少个空格、换行、tab，都会折叠成一个空格。
+- 高矮不齐，底边对齐
+- 自动换行
