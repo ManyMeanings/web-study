@@ -1,606 +1,271 @@
-- [基础](#基础)
-  - [Vue.js 介绍](#vuejs-介绍)
-    - [Vue 框架的特点](#vue-框架的特点)
-    - [MVVM 模式](#mvvm-模式)
-  - [安装](#安装)
-    - [使用`<script>`直接引入](#使用script直接引入)
-    - [NPM](#npm)
-    - [vue-cli](#vue-cli)
-  - [Vue 实例](#vue-实例)
-    - [创建一个 Vue 实例](#创建一个-vue-实例)
-    - [数据与方法](#数据与方法)
-    - [实例生命周期钩子](#实例生命周期钩子)
-  - [模板语法](#模板语法)
-    - [插值](#插值)
-    - [指令](#指令)
-    - [参数](#参数)
-    - [修饰符](#修饰符)
-    - [缩写](#缩写)
-  - [计算属性和侦听器](#计算属性和侦听器)
-    - [计算属性](#计算属性)
-    - [计算属性和方法的不同](#计算属性和方法的不同)
-    - [计算属性对比侦听属性](#计算属性对比侦听属性)
-    - [计算属性的 setter](#计算属性的-setter)
-  - [侦听器](#侦听器)
-  - [Class 与 Style 绑定](#class-与-style-绑定)
-    - [绑定 HTML Class](#绑定-html-class)
-    - [绑定内联样式](#绑定内联样式)
-  - [条件渲染](#条件渲染)
-    - [v-if](#v-if)
-    - [v-show](#v-show)
-  - [列表渲染](#列表渲染)
-    - [v-for](#v-for)
-  - [事件处理](#事件处理)
-    - [v-on](#v-on)
-    - [事件修饰符](#事件修饰符)
-    - [为什么在 HTML 中监听事件？](#为什么在-html-中监听事件)
-  - [表单输入绑定](#表单输入绑定)
-    - [v-model](#v-model)
-    - [值绑定](#值绑定)
-    - [修饰符](#修饰符-1)
-  - [组件基础](#组件基础)
+- [1. 什么是 SPA 单页面？它的优缺点是什么？](#1-什么是-spa-单页面它的优缺点是什么)
+- [2. v-show 与 v-if 有什么区别？](#2-v-show-与-v-if-有什么区别)
+- [3. Class 与 Style 如何动态绑定？](#3-class-与-style-如何动态绑定)
+- [4. 怎样理解 Vue 的单向数据流？](#4-怎样理解-vue-的单向数据流)
+- [5. computed 和 watch 的区别和运用的场景？](#5-computed-和-watch-的区别和运用的场景)
+- [6. Vue 无法检测怎样的数组变动？如何解决?](#6-vue-无法检测怎样的数组变动如何解决)
+- [7. 谈谈你对 Vue 生命周期的理解？](#7-谈谈你对-vue-生命周期的理解)
+- [8. Vue 的父组件和子组件生命周期钩子函数执行顺序？](#8-vue-的父组件和子组件生命周期钩子函数执行顺序)
+- [9. 父组件如何监听子组件的生命周期？](#9-父组件如何监听子组件的生命周期)
+- [10. 谈谈你对 keep-alive 的了解？](#10-谈谈你对-keep-alive-的了解)
+- [11. 组件中的 data 为什么是个函数？](#11-组件中的-data-为什么是个函数)
+- [12. v-model 的原理？](#12-v-model-的原理)
+- [13. Vue 组件间通信有哪几种方式？](#13-vue-组件间通信有哪几种方式)
+- [14. Vue-router 中常用的 hash 和 history 路由模式实现原理?](#14-vue-router-中常用的-hash-和-history-路由模式实现原理)
+- [15. Vue 是如何实现数据双向绑定的？](#15-vue-是如何实现数据双向绑定的)
+- [16. Vue 框架怎么实现对象和数组的监听？](#16-vue-框架怎么实现对象和数组的监听)
+- [17. 虚拟 DOM 的实现原理？](#17-虚拟-dom-的实现原理)
 
-# 基础
+### 1. 什么是 SPA 单页面？它的优缺点是什么？
 
-## Vue.js 介绍
+SPA（single-page application）仅在 Web 页面初始化时加载相应的 HTML、JavaScript 和 CSS。一旦页面加载完成，SPA 不会因为用户的操作而进行页面的重新加载或跳转；取而代之的是利用**路由机制**实现 HTML 内容的变换，UI 与用户的交互，避免页面的重新加载。
 
-Vue 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，Vue 也完全能够为复杂的单页应用提供驱动。
+**优点：**
 
-### Vue 框架的特点
+- 用户体验好、快，内容的改变不需要重新加载整个页面，避免了不必要的跳转和重复渲染。
+- 服务器压力小。
+- 前后端职责分离，架构清晰：前端进行交互逻辑，后端负责数据处理。
 
-- 模板渲染
-- 响应式的更新机制
-- 渐进式框架
-- 组件化/模块化
-- 轻量，速度快
+**缺点：**
 
-### MVVM 模式
+- 初次加载耗时多：为实现单页 Web 应用功能及显示效果，需要在加载页面的时候将 JavaScript、CSS 统一加载，部分页面按需加载。
+- 前进后退路由管理：由于单页应用在一个页面中显示所有的内容，所以不能使用浏览器的前进后退功能，所有的页面切换需要自己建立堆栈管理。
+- SEO 难度较大：由于所有的内容都在一个页面中动态替换显示，所以在 SEO 上其有着天然的弱势。
 
-- Model：负责数据存储
-- View：负责页面展示
-- View Model：负责业务逻辑处理，对数据加工后交给视图展示
+参考：[vue-router 教程](https://router.vuejs.org/zh/guide/)
 
-## 安装
+### 2. v-show 与 v-if 有什么区别？
 
-### 使用`<script>`直接引入
+v-if 是真正的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建；也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
 
-```html
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-```
+v-show 就简单得多——**不管初始条件是什么，元素总是会被渲染**，并且只是简单地基于 CSS 的 “display” 属性进行切换。
 
-### NPM
+所以，v-if 适用于在运行时很少改变条件，不需要频繁切换条件的场景；v-show 则适用于需要非常频繁切换条件的场景。
 
-在用 Vue 构建大型应用时推荐使用 NPM 安装。NPM 能很好地和诸如 webpack 或 Browserify 模块打包器配合使用。同时 Vue 也提供配套工具来开发单文件组件。
+### 3. Class 与 Style 如何动态绑定？
 
-```bash
-npm install vue
-```
+通过对象语法：
 
 ```js
-import Vue from "vue";
+<div v-bind:class="{ active: isActive, 'text-danger': hasError }"></div>
+
+data: {
+  isActive: true,
+  hasError: false
+}
 ```
 
-### vue-cli
-
-## Vue 实例
-
-### 创建一个 Vue 实例
-
-每个 Vue 应用都是通过用 Vue 函数创建一个新的 Vue 实例开始的：
+通过数组语法：
 
 ```js
-var vm = new Vue({
-  //绑定元素
-  el: "",
-  //绑定数据
-  data: {},
-  //绑定方法
-  methods: {},
-});
+<div v-bind:class="[isActive ? activeClass : '', errorClass]"></div>
+
+data: {
+  activeClass: 'active',
+  errorClass: 'text-danger'
+}
 ```
 
-### 数据与方法
+### 4. 怎样理解 Vue 的单向数据流？
 
-当一个 Vue 实例被创建时，它将 data 对象中的所有的 property 加入到 Vue 的响应式系统中。当这些 property 的值发生改变时，视图将会产生“响应”，即匹配更新为新的值。
+所有的 prop 都使得其父子 prop 之间形成了一个单向下行绑定：父级 prop 的更新会向下流动到子组件中，但是反过来则不行。这样会防止从子组件意外改变父级组件的状态，从而导致你的应用的数据流向难以理解。
+
+额外的，每次父级组件发生更新时，子组件中所有的 prop 都将会刷新为最新的值。这意味着你不应该在一个子组件内部改变 prop。如果你这样做了，Vue 会在浏览器的控制台中发出警告。子组件想修改时，只能通过 \$emit 派发一个自定义事件，父组件接收到后，由父组件修改。
+
+### 5. computed 和 watch 的区别和运用的场景？
+
+computed 是计算属性，**依赖其它属性值**，并且 computed 的值有**缓存**，只有它依赖的属性值发生改变，下一次获取 computed 的值时才会重新计算 computed 的值。
+
+watch 更多的是观察的作用，类似于某些数据的监听回调，每当监听的数据变化时都会执行回调进行后续操作。
+
+**运用场景：**
+
+- 当我们需要进行数值计算，并且依赖于其它数据时，应该使用 computed，因为可以利用 computed 的缓存特性，避免每次获取值时，都要重新计算。
+- 当我们需要**在数据变化时执行异步或开销较大的操作**时，应该使用 watch，使用 watch 选项允许我们执行异步操作，限制我们执行该操作的频率，并在我们得到最终结果前，设置中间状态。这些都是计算属性无法做到的。
+
+参考：[计算属性和侦听器](https://cn.vuejs.org/v2/guide/computed.html)
+
+### 6. Vue 无法检测怎样的数组变动？如何解决?
+
+- 直接用索引值设置一个数组项：`vm.items[index] = newValue`
+- 直接修改数组长度：`vm.items.length = newLength`
 
 ```js
-var data = {
-  a: 1,
-};
-var vm = new Vue({
-  data: data,
-});
-console.log(vm.a == data.a); // => true
+//修改数组项的方法
+Vue.set(vm.items, index, newValue);
+vm.$set(vm.items, index, newValue);
+vm.items.splice(index, 1, newValue);
 
-vm.a = 2;
-console.log(data.a); // => 2
-
-data.a = 3;
-console.log(vm.a); // => 3
+//修改数组长度
+vm.items.splice(newLength);
 ```
 
-只有当实例被创建时就已经存在于 data 中的 property 才是响应式的。如果你知道你会在晚些时候需要一个 property，但是一开始它为空或不存在，那么你需要设置一些初始值。但是，如果使用了 Object.freeze()，这会阻止修改现有的 property，也意味着响应系统无法再追踪变化。
+**vm.\$set 实现原理：**
+
+- 如果目标是数组，使用 splice 方法。
+- 如果目标是对象，对对象属性使用`Object.defineProperty`添加 getter 和 setter ，实现数据劫持。
+
+### 7. 谈谈你对 Vue 生命周期的理解？
+
+Vue 的生命周期指的是组件从创建到销毁的一系列的过程。通过提供的 Vue 在生命周期各个阶段的钩子函数，我们可以很好的在 Vue 的各个生命阶段实现一些操作。Vue 一共有 8 个生命阶段，分别是创建前、创建后、加载前、加载后、更新前、更新后、销毁前和销毁后，每个阶段对应了一个生命周期的钩子函数。
+
+1. beforeCreate：组件实例被创建之初，组件的属性生效之前。
+2. created：组件实例已经完全创建，属性也绑定，但真实 dom 还没有生成，\$el 还不可用。我们可以在这里进行 **Ajax 请求**。
+3. beforeMount：此时已经完成了模板的编译，但是还没有挂载到页面中，相关的 render 函数首次被调用。
+4. mounted：此时，已经将编译好的模板，挂载到了页面指定的容器中显示，此时真实 DOM 渲染完了，可以**操作 DOM 了**。
+5. beforeUpdate：状态更新之前执行此函数， 此时 data 中的状态值是最新的，但是界面上显示的数据还是旧的，因为此时还没有开始重新渲染 DOM 节点。
+6. updated：实例更新完毕之后调用此函数，此时 data 中的状态值和界面上显示的数据，都已经完成了更新，界面已经被重新渲染好了。
+7. beforeDestroy：实例销毁之前调用。在这一步，实例仍然完全可用，可以这时**清除定时器或清除事件绑定**。
+8. destroyed：Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁。
+
+![Vue 生命周期示意图](https://camo.githubusercontent.com/35d63eb1f11390dc47f709e86ab7806821d48c9c/687474703a2f2f696d672e736d79687661652e636f6d2f32303138303631315f323133302e706e67)
+
+### 8. Vue 的父组件和子组件生命周期钩子函数执行顺序？
+
+- 加载渲染过程
+
+父 beforeCreate -> 父 created -> 父 beforeMount -> 子 beforeCreate -> 子 created -> 子 beforeMount -> 子 mounted -> 父 mounted
+
+- 子组件更新过程
+
+父 beforeUpdate -> 子 beforeUpdate -> 子 updated -> 父 updated
+
+- 父组件更新过程
+
+父 beforeUpdate -> 父 updated
+
+- 父 beforeDestroy -> 子 beforeDestroy -> 子 destroyed -> 父 destroyed
+
+### 9. 父组件如何监听子组件的生命周期？
 
 ```js
-var obj = {
-  foo: "bar",
-};
-Object.freeze(obj);
+// 方法一：使用$emit触发父组件的事件
+// Parent.vue
+<Child @mounted="doSomething" />
+
+// Child.vue
+mounted(){
+    this.$emit("mounted");
+}
+
+// 方法二：使用hook监听
+// Parent.vue
+<Child @hook:mounted="doSomething" />
+
+doSomething(){
+    console.log('父组件监听到 mounted 钩子函数 ...');
+}
+
+// Child.vue
+mounted(){
+    console.log('子组件触发 mounted 钩子函数 ...');
+}
 ```
 
-除了数据 property，Vue 实例还暴露了一些有用的实例 property 与方法。它们都有前缀 \$，以便与用户定义的 property 区分开来。例如：
+### 10. 谈谈你对 keep-alive 的了解？
+
+keep-alive 是 Vue 内置的一个组件，可以使被包含的组件保留状态，避免重新渲染 ，其有以下特性：
+
+- 一般结合路由和动态组件一起使用，用于缓存组件。
+- 提供 include 和 exclude 属性，两者都支持字符串或正则表达式， include 表示只有名称匹配的组件会被缓存，exclude 表示任何名称匹配的组件都不会被缓存 ，其中 exclude 的优先级比 include 高。
+- 对应两个钩子函数 activated 和 deactivated ，当组件被激活时，触发钩子函数 activated，当组件被移除时，触发钩子函数 deactivated。
+
+### 11. 组件中的 data 为什么是个函数？
+
+因为组件是用来复用的，且 JS 里对象是引用关系，如果组件中 data 是一个对象，那么这样作用域没有隔离，子组件中的 data 属性值会相互影响，如果组件中 data 选项是一个函数，那么**每个实例可以维护一份被返回对象的独立的拷贝，组件实例之间的 data 属性值不会互相影响**；而 new Vue 的实例，是不会被复用的，因此不存在引用对象的问题。
+
+### 12. v-model 的原理？
+
+我们在 vue 项目中主要使用 v-model 指令在表单 input、textarea、select 等元素上创建双向数据绑定，我们知道 v-model 本质上不过是语法糖，v-model 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
+
+- text 和 textarea 元素使用 value 属性和 input 事件
+- checkbox 和 radio 使用 checked 属性和 change 事件
+- select 字段将 value 作为 prop 并将 change 作为事件
 
 ```js
-var data = { a: 1 };
-var vm = new Vue({
-  el: "#example",
-  data: data,
-});
+<input v-model="something" />
 
-vm.$data === data; // => true
-vm.$el === document.getElementById("example"); // => true
-
-// $watch 是一个实例方法
-vm.$watch("a", function (newValue, oldValue) {
-  // 这个回调将在 `vm.a` 改变后调用
-});
+//等价于
+<input v-bind:value="something" v-on:input="something = $event.target.value" />
 ```
 
-### 实例生命周期钩子
-
-每个 Vue 实例在被创建时都要经过一系列的初始化过程，这个过程中也会运行一些叫做生命周期钩子的函数，这给了用户在不同阶段添加自己的代码的机会，例如：
+在自定义组件中，v-model 默认会利用名为 value 的 prop 和名为 input 的事件：
 
 ```js
-new Vue({
-  data: {
-    a: 1,
-  },
-  created: function () {
-    //this指向调用它的 Vue 实例
-    console.log(this.a);
-  },
-});
-```
+//父组件：
+<Child v-model="message"></Child>
 
-![](https://cn.vuejs.org/images/lifecycle.png)
+//子组件：
+<div>{{value}}</div>
 
-## 模板语法
-
-Vue.js 使用了基于 HTML 的模板语法，允许开发者声明式地将 DOM 绑定至底层 Vue 实例的数据。所有 Vue.js 的模板都是合法的 HTML，所以能被遵循规范的浏览器和 HTML 解析器解析。
-
-在底层的实现上，Vue 将模板编译成虚拟 DOM 渲染函数。结合响应系统，Vue 能够智能地计算出最少需要重新渲染多少组件，并把 DOM 操作次数减到最少。
-
-### 插值
-
-```html
-<!--文本-->
-<span>{{msg}}</span>
-
-<!--html-->
-<span v-html="rawHtml"></span>
-
-<!--Attribute-->
-<span v-bind:class="dynamicClass"></span>
-
-<!--js 表达式-->
-{{ number + 1 }} {{ ok ? 'YES' : 'NO' }} {{ message.split('').reverse().join('')
-}}
-
-<div v-bind:id="'list-' + id"></div>
-```
-
-### 指令
-
-指令是带有 v- 前缀的特殊 attribute。指令 attribute 的值预期是单个 JavaScript 表达式。指令的职责是，当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM。
-
-### 参数
-
-一些指令能够接收一个“参数”，在指令名称之后以冒号表示。
-
-```html
-<button v-on:click="click"></button>
-
-<!--动态参数 使用js 表达式-->
-<button v-on:[eventName]="doSomething"></button>
-```
-
-### 修饰符
-
-修饰符是以半角句号 . 指明的特殊后缀，用于指出一个指令应该以特殊方式绑定。例如，.prevent 修饰符告诉 v-on 指令对于触发的事件调用 event.preventDefault()：
-
-```html
-<form v-on:submit.prevent="onSubmit"></form>
-```
-
-### 缩写
-
-Vue 为 v-bind 和 v-on 这两个最常用的指令，提供了特定简写：
-
-```html
-<!-- 缩写 -->
-<a :href="url"></a>
-
-<!-- 动态参数的缩写 (2.6.0+) -->
-<a :[key]="url"></a>
-
-<!-- 缩写 -->
-<a @click="doSomething"></a>
-
-<!-- 动态参数的缩写 (2.6.0+) -->
-<a @[event]="doSomething"></a>
-```
-
-## 计算属性和侦听器
-
-### 计算属性
-
-模板内的表达式非常便利，但是设计它们的初衷是用于简单运算的。在模板中放入太多的逻辑会让模板过重且难以维护。所以，对于任何复杂逻辑，你都应当使用计算属性。
-
-```js
-var vm = new Vue({
-  el: "#example",
-  data: {
-    msg: "Hello",
-  },
-  computed: {
-    reversedMsg: function () {
-      return this.msg.split("").reverse().join("");
-    },
-  },
-});
-
-console.log(vm.reversedMsg); // => olleH
-```
-
-### 计算属性和方法的不同
-
-我们可以将同一函数定义为一个方法而不是一个计算属性。两种方式的最终结果确实是完全相同的。然而，不同的是**计算属性是基于它们的响应式依赖进行缓存的**。只在相关响应式依赖发生改变时它们才会重新求值。这就意味着只要 msg 还没有发生改变，多次访问 reversedMsg 计算属性会立即返回之前的计算结果，而不必再次执行函数。相比之下，每当触发重新渲染时，调用方法将总会再次执行函数。
-
-### 计算属性对比侦听属性
-
-Vue 提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：侦听属性。当你有一些数据需要随着其它数据变动而变动时，你很容易滥用 watch。然而，通常更好的做法是使用计算属性而不是命令式的 watch 回调。
-
-### 计算属性的 setter
-
-计算属性默认只有 getter，不过在需要时你也可以提供一个 setter：
-
-```js
-// ...
-computed: {
-  fullName: {
-    // getter
-    get: function () {
-      return this.firstName + ' ' + this.lastName;
-    },
-    // setter
-    set: function (newValue) {
-      var names = newValue.split(' ');
-      this.firstName = names[0];
-      this.lastName = names[names.length - 1];
-    }
+props:{
+    value: String
+},
+methods: {
+  test(){
+     this.$emit('input', '小红')
   }
 }
-// ...
-//调用setter
-vm.fullName = "John Doe";
 ```
 
-## 侦听器
-
-虽然计算属性在大多数情况下更合适，但有时也需要一个自定义的侦听器。这就是为什么 Vue 通过 watch 选项提供了一个更通用的方法，来响应数据的变化。当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的。
-
-```html
-<!--访问一个api-->
-<div id="watch-example">
-  <p>
-    Ask a yes/no question:
-    <input v-model="question" />
-  </p>
-  <p>{{answer}}</p>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
-<script>
-  var watchExampleVM = new Vue({
-    el: "#watch-example",
-    data: {
-      question: "",
-      answer: "I cannot give you an answer until you ask a question!",
-    },
-    watch: {
-      // 如果 `question` 发生改变，这个函数就会运行
-      question: function (newQuestion, oldQuestion) {
-        this.answer = "Waiting for you to stop typing...";
-        this.debouncedGetAnswer();
-      },
-    },
-    created: function () {
-      // `_.debounce` 是一个通过 Lodash 限制操作频率的函数。
-      this.debouncedGetAnswer = _.debounce(this.getAnswer, 500);
-    },
-    methods: {
-      getAnswer: function () {
-        if (this.question.indexOf("?") === -1) {
-          this.answer = "Questions usually contain a question mark. ";
-          return;
-        }
-        this.answer = "Thinking...";
-        var vm = this;
-        axios
-          .get("https://yesno.wtf/api")
-          .then(function (response) {
-            vm.answer = _.capitalize(response.data.answer);
-          })
-          .catch(function (error) {
-            vm.answer = "Error! Could not reach the API. " + error;
-          });
-      },
-    },
-  });
-</script>
-```
-
-## Class 与 Style 绑定
-
-操作元素的 class 列表和内联样式是数据绑定的一个常见需求。因为它们都是 attribute，所以我们可以用 v-bind 处理它们：只需要通过表达式计算出字符串结果即可。不过，字符串拼接麻烦且易错。因此，在将 v-bind 用于 class 和 style 时，Vue.js 做了专门的增强。表达式结果的类型除了字符串之外，还可以是对象或数组。
-
-### 绑定 HTML Class
-
-```html
-<!--1. 对象语法-->
-<div
-  class="static"
-  v-bind:class="{ active: isActive, 'text-danger': hasError }"
-></div>
-
-data: { isActive: true, hasError: false }
-
-<!--以上代码渲染结果是：-->
-<div class="static active"></div>
-
-<!--2. 数组语法-->
-<div v-bind:class="[activeClass, errorClass]"></div>
-
-data: { activeClass: 'active', errorClass: 'text-danger' }
-
-<!--以上代码渲染结果是：-->
-<div class="active text-danger"></div>
-```
-
-### 绑定内联样式
-
-```html
-<!--1. 对象语法-->
-<div v-bind:style="styleObject"></div>
-
-data: { styleObject: { color: 'red', fontSize: '13px' } }
-
-<!--2. 数组语法-->
-<!--将多个样式对象应用到同一个元素上-->
-<div v-bind:style="[baseStyles, overridingStyles]"></div>
-
-<!--多重值 2.3.0+ -->
-<!--这样写只会渲染数组中最后一个被浏览器支持的值。-->
-<div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
-```
-
-## 条件渲染
-
-### v-if
-
-v-if 指令用于条件性地渲染一块内容。这块内容只会在指令的表达式返回 truthy 值的时候被渲染。也可以用 v-else 添加一个“else 块”,用 v-else-if 充当 v-if 的“else-if 块”：
-
-```html
-<div v-if="type === 'A'">
-  A
-</div>
-<div v-else-if="type === 'B'">
-  B
-</div>
-<div v-else-if="type === 'C'">
-  C
-</div>
-<div v-else>
-  Not A/B/C
-</div>
-
-<!--用 template 渲染分组-->
-<template v-if="ok">
-  <h1>Title</h1>
-  <p>Paragraph 1</p>
-  <p>Paragraph 2</p>
-</template>
-```
-
-Vue 会尽可能高效地渲染元素，通常会复用已有元素而不是从头开始渲染。这样也不总是符合实际需求，所以 Vue 为你提供了一种方式来表达“这两个元素是完全独立的，不要复用它们”。只需添加一个具有唯一值的 key attribute 即可：
-
-```html
-<template v-if="loginType === 'username'">
-  <label>Username</label>
-  <input placeholder="Enter your username" key="username-input" />
-</template>
-<template v-else>
-  <label>Email</label>
-  <input placeholder="Enter your email address" key="email-input" />
-</template>
-```
-
-### v-show
-
-另一个用于根据条件展示元素的选项是 v-show 指令,用法和 v-if 大致一样，但是 v-show 不支持 <template> 元素，也不支持 v-else。
-
-**v-if 和 v-show 的区别**
-
-v-if 是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
-
-相比之下，v-show 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
-
-一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。
-
-## 列表渲染
-
-### v-for
-
-```html
-<!--基于数组-->
-<ul id="example-1">
-  <li v-for="(item, index) in items" v-bind:key="item.msg">
-    {{item.msg}}
-  </li>
-</ul>
-
-<script>
-  var example1 = new Vue({
-    el: "#example-1",
-    data: { items: [{ msg: "foo" }, { msg: "bar" }] },
-  });
-</script>
-
-<!--基于对象-->
-<ul id="example-2">
-  <li v-for="(value, name, index) in object" v-bind:key="value">
-    {{ index }}. {{ name }}: {{ value }}
-  </li>
-</ul>
-
-<script>
-  new Vue({
-    el: "#example-2",
-    data: {
-      object: {
-        title: "How to do lists in Vue",
-        author: "Jane Doe",
-        publishedAt: "2016-04-10",
-      },
-    },
-  });
-</script>
-
-<!--在 template 上使用-->
-<ul>
-  <template v-for="item in items">
-    <li>{{ item.msg }}</li>
-    <li class="divider" role="presentation"></li>
-  </template>
-</ul>
-```
-
-当 Vue 正在更新使用 v-for 渲染的元素列表时，它默认使用“就地更新”的策略。如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序，而是就地更新每个元素，并且确保它们在每个索引位置正确渲染。这个默认的模式是高效的，但是只适用于不依赖子组件状态或临时 DOM 状态（例如：表单输入值）的列表渲染输出。
-
-为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一 key attribute。建议尽可能在使用 v-for 时提供 key attribute，除非遍历输出的 DOM 内容非常简单，或者是刻意依赖默认行为以获取性能上的提升。
-
-## 事件处理
-
-### v-on
-
-```html
-<div id="example">
-  <button v-on:click="greet">Greet</button>
-</div>
-
-<script>
-  var example = new Vue({
-    el: "example",
-    data: {
-      name: "Vue.js",
-    },
-    methods: {
-      greet: function (event) {
-        alert("hello");
-        if (event) {
-          alert(event.target.tagName);
-        }
-      },
-    },
-  });
-</script>
-```
-
-### 事件修饰符
-
-```html
-<!-- 阻止单击事件继续传播 -->
-<a v-on:click.stop="doThis"></a>
-
-<!-- 提交事件不再重载页面 -->
-<form v-on:submit.prevent="onSubmit"></form>
-
-<!-- 修饰符可以串联 -->
-<a v-on:click.stop.prevent="doThat"></a>
-
-<!-- 只有修饰符 -->
-<form v-on:submit.prevent></form>
-
-<!-- 添加事件监听器时使用事件捕获模式 -->
-<!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 -->
-<div v-on:click.capture="doThis">...</div>
-
-<!-- 只当在 event.target 是当前元素自身时触发处理函数 -->
-<!-- 即事件不是从内部元素触发的 -->
-<div v-on:click.self="doThat">...</div>
-```
-
-### 为什么在 HTML 中监听事件？
-
-你可能注意到这种事件监听的方式违背了关注点分离这个长期以来的优良传统。但不必担心，因为所有的 Vue.js 事件处理方法和表达式都严格绑定在当前视图的 ViewModel 上，它不会导致任何维护上的困难。实际上，使用 v-on 有几个好处：
-
-1. 扫一眼 HTML 模板便能轻松定位在 JavaScript 代码里对应的方法。
-2. 因为你无须在 JavaScript 里手动绑定事件，你的 ViewModel 代码可以是非常纯粹的逻辑，和 DOM 完全解耦，更易于测试。
-3. 当一个 ViewModel 被销毁时，所有的事件处理器都会自动被删除。你无须担心如何清理它们。
-
-## 表单输入绑定
-
-### v-model
-
-你可以用 v-model 指令在表单`<input>`、`<textarea>`及`<select>`元素上创建双向数据绑定。它会根据控件类型自动选取正确的方法来更新元素。尽管有些神奇，但 v-model 本质上不过是语法糖。它负责监听用户的输入事件以更新数据，并对一些极端场景进行一些特殊处理。
-
-v-model 会忽略所有表单元素的 value、checked、selected attribute 的初始值而总是将 Vue 实例的数据作为数据来源。你应该通过 JavaScript 在组件的 data 选项中声明初始值。
-
-```html
-<!--文本-->
-<input v-model="message" placeholder="edit me" />
-<p>Message is: {{ message }}</p>
-
-<!--多行文本-->
-<p>{{ message }}</p>
-<textarea v-model="message" placeholder="add multiple lines"></textarea>
-
-<!--复选框-->
-<input type="checkbox" id="checkbox" v-model="checked" />
-<label for="checkbox">{{ checked }}</label>
-
-<!--单选按钮-->
-<div id="example">
-  <input type="radio" id="one" value="One" v-model="picked" />
-  <label for="one">One</label>
-  <br />
-  <input type="radio" id="two" value="Two" v-model="picked" />
-  <label for="two">Two</label>
-  <br />
-  <span>Picked: {{ picked }}</span>
-</div>
-
-<!--选择框-->
-<div id="example-6">
-  <select v-model="selected" multiple style="width: 50px;">
-    <option>A</option>
-    <option>B</option>
-    <option>C</option>
-  </select>
-  <br />
-  <span>Selected: {{ selected }}</span>
-</div>
-```
-
-### 值绑定
-
-有时我们可能想把值绑定到 Vue 实例的一个动态 property 上，这时可以用 v-bind 实现，并且这个 property 的值可以不是字符串。
-
-### 修饰符
-
-- .lazy 在 change 事件之后进行同步
-- .number 自动将用户的输入值转为数值类型
-- .trim 自动过滤用户输入的首尾空白字符
-
-## 组件基础
+### 13. Vue 组件间通信有哪几种方式？
+
+Vue 组件间通信只要指以下 3 类通信：父子组件通信、隔代组件通信、兄弟组件通信，下面我们分别介绍每种通信方式且会说明此种方法可适用于哪类组件间通信。
+
+1. props / \$emit 适用父子组件通信
+2. ref 与 \$parent / \$children 适用父子组件通信
+3. EventBus （\$emit / \$on） 适用于父子、隔代、兄弟组件通信
+4. \$attrs/\$listeners 适用于隔代组件通信
+5. provide / inject 适用于隔代组件通信
+6. Vuex 适用于 父子、隔代、兄弟组件通信
+
+参考：[Vue 组件间通信六种方式](https://juejin.im/post/6844903845642911752)
+
+### 14. Vue-router 中常用的 hash 和 history 路由模式实现原理?
+
+**hash 模式实现原理**
+
+hash 就是 url 中 # 后面的内容。
+
+- URL 中 hash 值只是客户端的一种状态，也就是说当向服务器端发出请求时，hash 部分不会被发送。
+- hash 值的改变，都会在浏览器的访问历史中增加一个记录。因此我们能通过浏览器的回退、前进按钮控制 hash 的切换。
+- 可以通过 a 标签，并设置 href 属性，当用户点击这个标签后，URL 的 hash 值会发生改变。
+- 可以使用 hashchange 事件来监听 hash 值的变化，从而对页面进行跳转（渲染）。
+
+**history 模式的实现原理**
+
+HTML5 提供了 History API 来实现 URL 的变化。最主要的 API 有以下两个：`history.pushState()`和`history.repalceState()`。这两个 API 可以在不进行刷新的情况下，操作浏览器的历史纪录。
+
+- pushState 和 repalceState 两个 API 来操作实现 URL 的变化。
+- 可以使用 popstate 事件来监听 url 的变化，从而对页面进行跳转（渲染）。
+- pushState 或 replaceState 不会触发 popstate 事件，这时我们需要手动触发页面跳转（渲染）。
+
+### 15. Vue 是如何实现数据双向绑定的？
+
+Vue 数据双向绑定主要是指：数据变化更新视图，视图变化更新数据。
+
+视图变化更新数据可以通过事件监听的方式来实现，比如 input 标签的 oninput 事件，当 input 的 value 值发生变化就会触发。
+
+数据变化更新视图主要通过使用数据劫持和发布订阅者模式来实现的。用一句话概括：使用`Object.defineProperty`方法把 data 对象里的每个数据的读写转化成 getter/setter，当数据变化时通知视图更新。
+
+第一步，实现一个监听器，用来劫持并监听所有属性，如果属性发生变化，就通知订阅者。使用`Object.defineProperty`方法把 data 对象里的每个数据的读写转化成 getter/setter，当数据变化就会触发 setter，这样就监听到了数据变化。
+
+第二步，实现一个订阅器，用来收集订阅者，对监听器和订阅者进行统一管理。
+
+第三步，实现一个订阅者，收到属性的变化通知并执行相应的方法，从而更新视图。
+
+第四步，实现一个解析器，解析每个节点的相关指令，对模板数据和订阅器进行初始化。
+
+参考：[0 到 1 掌握：Vue 核心之数据双向绑定](https://juejin.im/post/6844903903822086151)
+
+### 16. Vue 框架怎么实现对象和数组的监听？
+
+遍历数组和递归遍历对象，使用`Object.defineProperty()`对数据进行劫持。
+
+### 17. 虚拟 DOM 的实现原理？
+
+- 第一步，使用 js 对象模拟真实 dom 树。
+- 第二步，比较修改前后两棵虚拟 dom 树的差异。（diff 算法）
+- 第三步，将差异应用到真实 dom 树，更新对应节点。（pach 算法）
+
+参考：[深入剖析：Vue 核心之虚拟 DOM](https://juejin.im/post/6844903895467032589#heading-14)
