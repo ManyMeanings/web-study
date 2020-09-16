@@ -60,6 +60,7 @@
 - [58. 合并两个数组的方法](#58-合并两个数组的方法)
 - [59. 函数预编译的步骤](#59-函数预编译的步骤)
 - [60. 函数中 this 的指向](#60-函数中-this-的指向)
+- [61. 拓展运算符的作用？](#61-拓展运算符的作用)
 
 ### 1. 介绍一下 js 的基本数据类型。
 
@@ -89,11 +90,11 @@ JavaScript 对象是通过引用来传递的，我们创建的每个新对象实
 
 ### 6. 在 js 中不同进制数字的表示方式?
 
-- 以 0X、0x 开头的表示为十六进制。
+-   以 0X、0x 开头的表示为十六进制。
 
-- 以 0、0O、0o 开头的表示为八进制。
+-   以 0、0O、0o 开头的表示为八进制。
 
-- 以 0B、0b 开头的表示为二进制格式。
+-   以 0B、0b 开头的表示为二进制格式。
 
 ### 7. NaN 代表什么意思？
 
@@ -111,19 +112,19 @@ NaN 是一个特殊值，它和自身不相等，是唯一一个非自反的值�
 
 ### 9. 什么情况下会发生布尔值的隐式强制类型转换？
 
-- `if ()`语句中的条件判断表达式。
-- `for (;;)` 语句中的条件判断表达式（第二个）。
-- `while()` 和 `do{}while()`循环中的条件判断表达式。
-- `? :`中的条件判断表达式。
-- 逻辑运算符 ||（逻辑或）和 &&（逻辑与）左边的操作数。
+-   `if ()`语句中的条件判断表达式。
+-   `for (;;)` 语句中的条件判断表达式（第二个）。
+-   `while()` 和 `do{}while()`循环中的条件判断表达式。
+-   `? :`中的条件判断表达式。
+-   逻辑运算符 ||（逻辑或）和 &&（逻辑与）左边的操作数。
 
 ### 10. 其他值到布尔类型的值的转换规则？
 
-- undefined
-- null
-- false
-- +0、-0 和 NaN
-- ""
+-   undefined
+-   null
+-   false
+-   +0、-0 和 NaN
+-   ""
 
 以上为假值。假值的布尔强制类型转换结果为 false，从逻辑上说，假值列表以外的都应该是真值。
 
@@ -135,12 +136,12 @@ NaN 是一个特殊值，它和自身不相等，是唯一一个非自反的值�
 
 ### 12. `==`操作符的强制类型转换规则？
 
-- 字符串和数字之间的相等比较，将字符串转换为数字之后再进行比较。
-- 其他类型和布尔类型之间的相等比较，先将布尔值转换为数字后，再应用其他规则进行比较。
-- `null`和`undefined`之间的相等比较，结果为真。其他值和它们进行比较都返回假值。
-- 对象和非对象之间的相等比较，对象先调用`ToPrimitive`抽象操作后，再进行比较。
-- 如果一个操作值为`NaN`，则相等比较返回 false。
-- 如果两个操作值都是对象，则比较它们是不是指向同一个对象。如果两个操作值都指向同一个对象，则相等操作符返回`true`，否则，返回`false`。
+-   字符串和数字之间的相等比较，将字符串转换为数字之后再进行比较。
+-   其他类型和布尔类型之间的相等比较，先将布尔值转换为数字后，再应用其他规则进行比较。
+-   `null`和`undefined`之间的相等比较，结果为真。其他值和它们进行比较都返回假值。
+-   对象和非对象之间的相等比较，对象先调用`ToPrimitive`抽象操作后，再进行比较。
+-   如果一个操作值为`NaN`，则相等比较返回 false。
+-   如果两个操作值都是对象，则比较它们是不是指向同一个对象。如果两个操作值都指向同一个对象，则相等操作符返回`true`，否则，返回`false`。
 
 ### 13. 常用正则表达式？&#128128;
 
@@ -190,56 +191,56 @@ BOM 指的是浏览器对象模型，它指的是把浏览器当做一个对象�
 
 ```js
 const EventUtils = {
-  // 视能力分别使用dom0||dom2||IE方式 来绑定事件
-  // 添加事件
-  addEvent: function (element, type, handler) {
-    if (element.addEventListener) {
-      element.addEventListener(type, handler, false);
-    } else if (element.attachEvent) {
-      element.attachEvent("on" + type, handler);
-    } else {
-      element["on" + type] = handler;
-    }
-  },
+	// 视能力分别使用dom0||dom2||IE方式 来绑定事件
+	// 添加事件
+	addEvent: function (element, type, handler) {
+		if (element.addEventListener) {
+			element.addEventListener(type, handler, false);
+		} else if (element.attachEvent) {
+			element.attachEvent('on' + type, handler);
+		} else {
+			element['on' + type] = handler;
+		}
+	},
 
-  // 移除事件
-  removeEvent: function (element, type, handler) {
-    if (element.removeEventListener) {
-      element.removeEventListener(type, handler, false);
-    } else if (element.detachEvent) {
-      element.detachEvent("on" + type, handler);
-    } else {
-      element["on" + type] = null;
-    }
-  },
+	// 移除事件
+	removeEvent: function (element, type, handler) {
+		if (element.removeEventListener) {
+			element.removeEventListener(type, handler, false);
+		} else if (element.detachEvent) {
+			element.detachEvent('on' + type, handler);
+		} else {
+			element['on' + type] = null;
+		}
+	},
 
-  // 获取事件目标
-  getTarget: function (event) {
-    return event.target || event.srcElement;
-  },
+	// 获取事件目标
+	getTarget: function (event) {
+		return event.target || event.srcElement;
+	},
 
-  // 获取 event 对象的引用，取到事件的所有信息，确保随时能使用 event
-  getEvent: function (event) {
-    return event || window.event;
-  },
+	// 获取 event 对象的引用，取到事件的所有信息，确保随时能使用 event
+	getEvent: function (event) {
+		return event || window.event;
+	},
 
-  // 阻止事件（主要是事件冒泡，因为 IE 不支持事件捕获）
-  stopPropagation: function (event) {
-    if (event.stopPropagation) {
-      event.stopPropagation();
-    } else {
-      event.cancelBubble = true;
-    }
-  },
+	// 阻止事件（主要是事件冒泡，因为 IE 不支持事件捕获）
+	stopPropagation: function (event) {
+		if (event.stopPropagation) {
+			event.stopPropagation();
+		} else {
+			event.cancelBubble = true;
+		}
+	},
 
-  // 取消事件的默认行为
-  preventDefault: function (event) {
-    if (event.preventDefault) {
-      event.preventDefault();
-    } else {
-      event.returnValue = false;
-    }
-  },
+	// 取消事件的默认行为
+	preventDefault: function (event) {
+		if (event.preventDefault) {
+			event.preventDefault();
+		} else {
+			event.returnValue = false;
+		}
+	},
 };
 ```
 
@@ -257,8 +258,8 @@ const EventUtils = {
 
 **闭包使用场景：**
 
-- 把回调（事件触发时调用的函数）绑定到事件上（在内存中维持变量，缓存数据，延迟执行）
-- 模拟私有变量（保护函数内变量的安全）
+-   把回调（事件触发时调用的函数）绑定到事件上（在内存中维持变量，缓存数据，延迟执行）
+-   模拟私有变量（保护函数内变量的安全）
 
 参考：[说说 JavaScript 的闭包用于什么场景](https://juejin.im/entry/6844903474337939469)
 
@@ -287,13 +288,13 @@ JSON 是一种基于文本的轻量级的数据交换格式。它可以被任何
 
 ### 22. js 延迟加载的方式有哪些？
 
-- 将 js 脚本放在文档的底部，来使 js 脚本尽可能的在最后来加载执行。
+-   将 js 脚本放在文档的底部，来使 js 脚本尽可能的在最后来加载执行。
 
-- 给 js 脚本添加 defer 属性，这个属性会让脚本的加载与文档的解析同步解析，然后在文档解析完成后再执行这个脚本文件，这样的话就能使页面的渲染不被阻塞。多个设置了 defer 属性的脚本按规范来说最后是顺序执行的，但是在一些浏览器中可能不是这样。
+-   给 js 脚本添加 defer 属性，这个属性会让脚本的加载与文档的解析同步解析，然后在文档解析完成后再执行这个脚本文件，这样的话就能使页面的渲染不被阻塞。多个设置了 defer 属性的脚本按规范来说最后是顺序执行的，但是在一些浏览器中可能不是这样。
 
-- 给 js 脚本添加 async 属性，这个属性会使脚本异步加载，不会阻塞页面的解析过程，但是当脚本加载完成后立即执行 js 脚本，这个时候如果文档没有解析完成的话同样会阻塞。多个 async 属性的脚本的执行顺序是不可预测的，一般不会按照代码的顺序依次执行。
+-   给 js 脚本添加 async 属性，这个属性会使脚本异步加载，不会阻塞页面的解析过程，但是当脚本加载完成后立即执行 js 脚本，这个时候如果文档没有解析完成的话同样会阻塞。多个 async 属性的脚本的执行顺序是不可预测的，一般不会按照代码的顺序依次执行。
 
-- 动态创建 DOM 标签的方式，我们可以对文档的加载事件进行监听，当文档加载完成后再动态的创建 script 标签来引入 js 脚本。
+-   动态创建 DOM 标签的方式，我们可以对文档的加载事件进行监听，当文档加载完成后再动态的创建 script 标签来引入 js 脚本。
 
 ### 23. Ajax 是什么? 如何创建一个 Ajax？&#10084;
 
@@ -312,19 +313,19 @@ Ajax 是一种异步通信的方法，通过直接由 js 脚本向服务器发�
 // 异步对象
 var xhr = new XMLHttpRequest();
 // 设置属性
-xhr.open("post", "post.php");
+xhr.open('post', 'post.php');
 // 如果想要使用post提交数据,必须添加此行
-xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 // 将数据通过send方法传递
-xhr.send("name=fox&age=18");
+xhr.send('name=fox&age=18');
 // 发送并接受返回值
 xhr.onreadystatechange = function () {
-  // 这步为判断服务器是否正确响应
-  if (xhr.readyState == 4 && xhr.status == 200) {
-    console.log(xhr.responseText);
-    // 修改页面的显示
-    document.querySelector("h1").innerHTML = xhr.responseText;
-  }
+	// 这步为判断服务器是否正确响应
+	if (xhr.readyState == 4 && xhr.status == 200) {
+		console.log(xhr.responseText);
+		// 修改页面的显示
+		document.querySelector('h1').innerHTML = xhr.responseText;
+	}
 };
 ```
 
@@ -336,22 +337,22 @@ xhr.onreadystatechange = function () {
 
 限制;
 
-- Cookie、LocalStorage 和 IndexDB 无法获取。
-- 无法获取和操作 DOM。
-- 不能发送 Ajax 请求。
+-   Cookie、LocalStorage 和 IndexDB 无法获取。
+-   无法获取和操作 DOM。
+-   不能发送 Ajax 请求。
 
 ### 25. js 的几种模块规范？
 
-- **CommonJS** 方案，它通过 require 来引入模块，通过 module.exports 定义模块的输出接口。这种模块加载方案是服务器端的解决方案，它是以同步的方式来引入模块的，因为在服务端文件都存储在本地磁盘，所以读取非常快，所以以同步的方式加载没有问题。但如果是在浏览器端，由于模块的加载是使用网络请求，因此使用异步加载的方式更加合适。
-- **AMD** 方案，这种方案采用异步加载的方式来加载模块，模块的加载不影响后面语句的执行，所有依赖这个模块的语句都定义在一个回调函数里，等到加载完成后再执行回调函数。require.js 实现了 AMD 规范。
-- **CMD** 方案，这种方案和 AMD 方案都是为了解决异步模块加载的问题，sea.js 实现了 CMD 规范。它和 require.js 的区别在于模块定义时对依赖的处理不同和对依赖模块的执行时机的处理不同。
-- **ES6** 提出的方案，使用 import 和 export 的形式来导入导出模块。这种方案和上面三种方案都不同。
+-   **CommonJS** 方案，它通过 require 来引入模块，通过 module.exports 定义模块的输出接口。这种模块加载方案是服务器端的解决方案，它是以同步的方式来引入模块的，因为在服务端文件都存储在本地磁盘，所以读取非常快，所以以同步的方式加载没有问题。但如果是在浏览器端，由于模块的加载是使用网络请求，因此使用异步加载的方式更加合适。
+-   **AMD** 方案，这种方案采用异步加载的方式来加载模块，模块的加载不影响后面语句的执行，所有依赖这个模块的语句都定义在一个回调函数里，等到加载完成后再执行回调函数。require.js 实现了 AMD 规范。
+-   **CMD** 方案，这种方案和 AMD 方案都是为了解决异步模块加载的问题，sea.js 实现了 CMD 规范。它和 require.js 的区别在于模块定义时对依赖的处理不同和对依赖模块的执行时机的处理不同。
+-   **ES6** 提出的方案，使用 import 和 export 的形式来导入导出模块。这种方案和上面三种方案都不同。
 
 ### 26. AMD 和 CMD 规范的区别？
 
-- 第一个方面是在模块定义时对依赖的处理不同。AMD 推崇依赖前置，在定义模块的时候就要声明其依赖的模块。而 CMD 推崇就近依赖，只有在用到某个模块的时候再去 require。
+-   第一个方面是在模块定义时对依赖的处理不同。AMD 推崇依赖前置，在定义模块的时候就要声明其依赖的模块。而 CMD 推崇就近依赖，只有在用到某个模块的时候再去 require。
 
-- 第二个方面是对依赖模块的执行时机处理不同。首先 AMD 和 CMD 对于模块的加载方式都是异步加载，不过它们的区别在于模块的执行时机，AMD 在依赖模块加载完成后就直接执行依赖模块，依赖模块的执行顺序和我们书写的顺序不一定一致。而 CMD 在依赖模块加载完成后并不执行，只是下载而已，等到所有的依赖模块都加载好后，进入回调函数逻辑，遇到 require 语句的时候才执行对应的模块，这样模块的执行顺序就和我们书写的顺序保持一致了。
+-   第二个方面是对依赖模块的执行时机处理不同。首先 AMD 和 CMD 对于模块的加载方式都是异步加载，不过它们的区别在于模块的执行时机，AMD 在依赖模块加载完成后就直接执行依赖模块，依赖模块的执行顺序和我们书写的顺序不一定一致。而 CMD 在依赖模块加载完成后并不执行，只是下载而已，等到所有的依赖模块都加载好后，进入回调函数逻辑，遇到 require 语句的时候才执行对应的模块，这样模块的执行顺序就和我们书写的顺序保持一致了。
 
 ### 27. DOM 操作——怎样添加、移除、移动、复制、创建和查找节点？&#10084;
 
@@ -396,20 +397,20 @@ removeAttribute(key);
 
 ### 30. 哪些操作会造成内存泄漏？
 
-- 第一种情况是我们由于使用未声明的变量，而意外的创建了一个全局变量，而使这个变量一直留在内存中无法被回收。
+-   第一种情况是我们由于使用未声明的变量，而意外的创建了一个全局变量，而使这个变量一直留在内存中无法被回收。
 
-- 第二种情况是我们设置了 setInterval 定时器，而忘记取消它，如果循环函数有对外部变量的引用的话，那么这个变量会被一直留在内存中，而无法被回收。
+-   第二种情况是我们设置了 setInterval 定时器，而忘记取消它，如果循环函数有对外部变量的引用的话，那么这个变量会被一直留在内存中，而无法被回收。
 
-- 第三种情况是我们获取一个 DOM 元素的引用，而后面这个元素被删除，由于我们一直保留了对这个元素的引用，所以它也无法被回收。
+-   第三种情况是我们获取一个 DOM 元素的引用，而后面这个元素被删除，由于我们一直保留了对这个元素的引用，所以它也无法被回收。
 
-- 第四种情况是不合理的使用闭包，从而导致某些变量一直被留在内存当中。
+-   第四种情况是不合理的使用闭包，从而导致某些变量一直被留在内存当中。
 
 ### 31. 如何判断当前脚本运行在浏览器还是 node 环境中？
 
 通过判断 Global 对象是否为 window，如果不为 window，当前脚本没有运行在浏览器中。
 
 ```js
-this === window ? "browser" : "node";
+this === window ? 'browser' : 'node';
 ```
 
 ### 32. 介绍一下 js 的节流与防抖？
@@ -421,37 +422,37 @@ this === window ? "browser" : "node";
 ```js
 //函数防抖的实现
 function debounce(fn, wait) {
-  var timer = null;
+	var timer = null;
 
-  return function () {
-    var context = this,
-      args = arguments;
-    //如果此时定时器存在，则取消之前的定时器重新计时
-    if (timer) {
-      clearTimeout(timer);
-      timer = null;
-    }
-    //设置定时器
-    timer = setTimeout(() => {
-      fn.apply(context, args);
-    }, wait);
-  };
+	return function () {
+		var context = this,
+			args = arguments;
+		//如果此时定时器存在，则取消之前的定时器重新计时
+		if (timer) {
+			clearTimeout(timer);
+			timer = null;
+		}
+		//设置定时器
+		timer = setTimeout(() => {
+			fn.apply(context, args);
+		}, wait);
+	};
 }
 
 //函数节流的实现
 function throttle(fn, delay) {
-  var preTime = Date.now();
+	var preTime = Date.now();
 
-  return function () {
-    var context = this,
-      args = arguments,
-      nowTime = Date.now();
+	return function () {
+		var context = this,
+			args = arguments,
+			nowTime = Date.now();
 
-    if (nowTime - preTime >= delay) {
-      preTime = Date.now();
-      return fn.apply(context, args);
-    }
-  };
+		if (nowTime - preTime >= delay) {
+			preTime = Date.now();
+			return fn.apply(context, args);
+		}
+	};
 }
 ```
 
@@ -537,15 +538,16 @@ function mySetInterval(fn, timeout){
 
 ### 42. let 和 const 的注意点？&#10084;
 
-- 声明的变量只在声明时的代码块内有效
-- 不存在声明提升
-- 存在暂时性死区，如果在变量声明前使用，会报错
-- 不允许重复声明，重复声明会报错
+-   声明的变量只在声明时的代码块内有效
+-   不存在变量提升，在声明前使用会报错
+-   暂时性死区：在当前作用域中如果存在 let 或 const 声明，所声明的变量就已经存在了，但是不可获取，只有等到声明变量的那一行代码出现，才可以获取和使用该变量
+-   不允许在相同作用域内重复声明同一个变量（不能在函数内部重新声明参数）
+-   let、const、class 声明的全局变量，不属于顶层对象的属性
 
 ### 43. Set 和 WeakSet 结构是什么？
 
-- ES6 提供了新的数据结构 Set。它类似于数组，但是成员的值都是唯一的，没有重复的值。
-- WeakSet 结构与 Set 类似，也是不重复的值的集合。但是 WeakSet 的成员只能是对象，而不能是其他类型的值。WeakSet 中的对象都是弱引用，即垃圾回收机制不考虑 WeakSet 对该对象的引用，
+-   ES6 提供了新的数据结构 Set。它类似于数组，但是成员的值都是唯一的，没有重复的值。
+-   WeakSet 结构与 Set 类似，也是不重复的值的集合。但是 WeakSet 的成员只能是对象，而不能是其他类型的值。WeakSet 中的对象都是弱引用，即垃圾回收机制不考虑 WeakSet 对该对象的引用，
 
 ### 44. 如何检测浏览器所支持的最小字体大小？
 
@@ -573,10 +575,10 @@ Vue 的生命周期指的是组件从创建到销毁的一系列的过程。通�
 element.onclick = function () {};
 //DOM2 的写法：
 //上面的第三参数中，true表示事件在捕获阶段触发，false表示事件在冒泡阶段触发（默认）
-element.addEventListener("click", function () {}, false);
+element.addEventListener('click', function () {}, false);
 //DOM3 的写法：
 //DOM3中，增加了很多事件类型，比如鼠标事件、键盘事件等。
-element.addEventListener("keyup", function () {}, false);
+element.addEventListener('keyup', function () {}, false);
 ```
 
 ### 46. DOM 事件模型和事件流？&#10084;
@@ -595,10 +597,10 @@ window --> document --> html--> body --> 父元素、子元素、目标元素
 
 ### 47. Event 对象的常见 api 方法
 
-- `event.preventDefault()`：阻止默认事件。
-- `event.stopPropagation()`：阻止冒泡。
-- `event.stopImmediatePropagation();`：设置事件优先级。
-- `event.currentTarget`和`event.target`：分别表示当前所绑定的事件对象和当前被点击的元素，常用于事件委托。
+-   `event.preventDefault()`：阻止默认事件。
+-   `event.stopPropagation()`：阻止冒泡。
+-   `event.stopImmediatePropagation();`：设置事件优先级。
+-   `event.currentTarget`和`event.target`：分别表示当前所绑定的事件对象和当前被点击的元素，常用于事件委托。
 
 ### 48. instance of 的原理
 
@@ -608,45 +610,45 @@ window --> document --> html--> body --> 父元素、子元素、目标元素
 
 ### 49. 跨域通信的几种方式&#10084;
 
-- JSONP：通过`<script>`标签的异步加载来实现的。比如说，实际开发中，我们发现，head 标签里，可以通过`<script>`标签的 src，里面放 url，加载很多在线的插件，这就是用到了 JSONP。
-- WebSocket：
+-   JSONP：通过`<script>`标签的异步加载来实现的。比如说，实际开发中，我们发现，head 标签里，可以通过`<script>`标签的 src，里面放 url，加载很多在线的插件，这就是用到了 JSONP。
+-   WebSocket：
 
 ```js
-var ws = new WebSocket("wss://echo.websocket.org");
+var ws = new WebSocket('wss://echo.websocket.org');
 //把请求发出去
 ws.onopen = function (evt) {
-  console.log("Connection open ...");
-  ws.send("Hello WebSockets!");
+	console.log('Connection open ...');
+	ws.send('Hello WebSockets!');
 };
 //对方发消息过来时，我接收
 ws.onmessage = function (evt) {
-  console.log("Received Message: ", evt.data);
-  ws.close();
+	console.log('Received Message: ', evt.data);
+	ws.close();
 };
 //关闭连接
 ws.onclose = function (evt) {
-  console.log("Connection closed.");
+	console.log('Connection closed.');
 };
 ```
 
-- CORS：可以理解成是既可以同步、也可以异步的 Ajax。
-- Hash：url 的 # 后面的内容就叫 Hash。Hash 的改变，页面不会刷新。这就是用 Hash 做跨域通信的基本原理（补充：url 的 ? 后面的内容叫 Search。Search 的改变，会导致页面刷新，因此不能做跨域通信）。
-- postMessage()：
+-   CORS：可以理解成是既可以同步、也可以异步的 Ajax。
+-   Hash：url 的 # 后面的内容就叫 Hash。Hash 的改变，页面不会刷新。这就是用 Hash 做跨域通信的基本原理（补充：url 的 ? 后面的内容叫 Search。Search 的改变，会导致页面刷新，因此不能做跨域通信）。
+-   postMessage()：
 
 ```js
 // 窗口A(http:A.com)向跨域的窗口B(http:B.com)发送信息
-Bwindow.postMessage("data", "http://B.com"); //这里强调的是B窗口里的window对象
+Bwindow.postMessage('data', 'http://B.com'); //这里强调的是B窗口里的window对象
 
 // 在窗口B中监听 message 事件
 Awindow.addEventListener(
-  "message",
-  function (event) {
-    //这里强调的是A窗口里的window对象
-    console.log(event.origin); //获取 ：url。这里指：http://A.com
-    console.log(event.source); //获取：A window对象
-    console.log(event.data); //获取传过来的数据
-  },
-  false
+	'message',
+	function (event) {
+		//这里强调的是A窗口里的window对象
+		console.log(event.origin); //获取 ：url。这里指：http://A.com
+		console.log(event.source); //获取：A window对象
+		console.log(event.data); //获取传过来的数据
+	},
+	false
 );
 ```
 
@@ -656,30 +658,30 @@ js 是单线程（同一时间只能做一件事），而且有一个任务队�
 
 ### 51. Class 和普通构造函数有何区别?
 
-- Class 在语法上更加贴合面向对象的写法
-- Class 实现继承更加易读、易理解
-- 更易于写 java 等后端语言的使用
-- 本质还是语法糖，使用 prototype
+-   Class 在语法上更加贴合面向对象的写法
+-   Class 实现继承更加易读、易理解
+-   更易于写 java 等后端语言的使用
+-   本质还是语法糖，使用 prototype
 
 ### 52. 谈谈你对 ES6 的理解&#10084;
 
-- 模板字符串
-- 箭头函数
-- for-of
-- arguments 对象
-- promise 对象
-- let 和 const 声明
-- 增加了块级作用域
-- module 模块的概念
-- 字符串、数组、对象新增的方法
-- symbol 基本数据类型
+-   模板字符串
+-   箭头函数
+-   for-of
+-   arguments 对象
+-   promise 对象
+-   let 和 const 声明
+-   增加了块级作用域
+-   module 模块的概念
+-   字符串、数组、对象新增的方法
+-   symbol 基本数据类型
 
 ### 53. 对 Promise 的理解&#10084;
 
 Promise 对象可以用同步的表现形式来书写异步代码，使用 Promise 主要有以下好处：
 
-- 解决回调地狱的问题（层层嵌套的回调函数）
-- 语法非常简洁、可读性强
+-   解决回调地狱的问题（层层嵌套的回调函数）
+-   语法非常简洁、可读性强
 
 基本用法：
 
@@ -690,33 +692,33 @@ Promise 对象可以用同步的表现形式来书写异步代码，使用 Promi
 ```js
 //使用Promise封装Ajax请求
 
-const request = require("request");
+const request = require('request');
 // Promise 封装接口
 function request1() {
-  return new Promise((resolve, reject) => {
-    request("https://www.baidu.com", function (response) {
-      if (response.retCode == 200) {
-        // 这里的 response 是接口1的返回结果
-        resolve("request1 success" + response);
-      } else {
-        reject("接口请求失败");
-      }
-    });
-  });
+	return new Promise((resolve, reject) => {
+		request('https://www.baidu.com', function (response) {
+			if (response.retCode == 200) {
+				// 这里的 response 是接口1的返回结果
+				resolve('request1 success' + response);
+			} else {
+				reject('接口请求失败');
+			}
+		});
+	});
 }
 
 request1().then((res1) => {
-  // 接口1请求成功后，打印接口1的返回结果
-  console.log(res1);
-  return request2();
+	// 接口1请求成功后，打印接口1的返回结果
+	console.log(res1);
+	return request2();
 });
 ```
 
 ### 54. 谈谈对 this 对象的理解
 
-- this 总是指向函数的直接调用者（而非间接调用者）
-- 如果有 new 关键字，this 指向 new 出来的那个对象
-- 在事件中，this 指向触发这个事件的对象
+-   this 总是指向函数的直接调用者（而非间接调用者）
+-   如果有 new 关键字，this 指向 new 出来的那个对象
+-   在事件中，this 指向触发这个事件的对象
 
 ### 55. 谈谈你对 webpack 的看法
 
@@ -730,17 +732,17 @@ gulp 是前端开发过程中一种基于流的代码构建工具，是自动化
 
 Gulp 的特点：
 
-- 易于使用：通过代码优于配置的策略，gulp 让简单的任务简单，复杂的任务可管理。
-- 构建快速：利用 Node.js 流的威力，你可以快速构建项目并减少频繁的 IO 操作。
-- 易于学习：通过最少的 API，掌握 gulp 毫不费力，构建工作尽在掌握：如同一系列流管道。
+-   易于使用：通过代码优于配置的策略，gulp 让简单的任务简单，复杂的任务可管理。
+-   构建快速：利用 Node.js 流的威力，你可以快速构建项目并减少频繁的 IO 操作。
+-   易于学习：通过最少的 API，掌握 gulp 毫不费力，构建工作尽在掌握：如同一系列流管道。
 
 ### 57. `apply()`和`call()`的作用和区别？
 
 **作用：**
 
-- 改变 this 指向
-- 借用其他对象的方法
-- bind
+-   改变 this 指向
+-   借用其他对象的方法
+-   bind
 
 **区别：**
 
@@ -757,7 +759,7 @@ var c = a.concat(b);
 
 //第二种，for循环
 for (let value of b) {
-  a.push(value);
+	a.push(value);
 }
 
 //第三种,apply
@@ -776,17 +778,17 @@ var c = [...a, ...b];
 
 ```js
 function fn(a) {
-  console.log(a); // 输出functiona(){}
-  var a = 123; //执行到这里重新对a赋，AO对象再一次更新
-  console.log(a); // 输出123
+	console.log(a); // 输出functiona(){}
+	var a = 123; //执行到这里重新对a赋，AO对象再一次更新
+	console.log(a); // 输出123
 
-  function a() {} //预编译环节已经进行了变量提升，故执行时不在看这行代码
-  console.log(a); // 输出123
+	function a() {} //预编译环节已经进行了变量提升，故执行时不在看这行代码
+	console.log(a); // 输出123
 
-  var b = function () {}; //这个是函数表达式不是函数声明，故不能提升，会对AO中的b重新赋值
-  console.log(b); //输出function(){}
+	var b = function () {}; //这个是函数表达式不是函数声明，故不能提升，会对AO中的b重新赋值
+	console.log(b); //输出function(){}
 
-  function d() {}
+	function d() {}
 }
 ```
 
@@ -794,9 +796,16 @@ function fn(a) {
 
 ### 60. 函数中 this 的指向
 
-- 以函数的形式（包括普通函数、定时器函数、立即执行函数）调用时，this 的指向永远都是 window
-- 以方法的形式调用时，this 指向调用方法的那个对象
-- 以构造函数的形式调用时，this 指向实例对象
-- 以事件绑定函数的形式调用时，this 指向绑定事件的对象
-- 使用 call 和 apply 调用时，this 指向指定的那个对象
-- 箭头函数不会创建自己的 this,它只会从自己的作用域链的上一层继承 this
+-   以函数的形式（包括普通函数、定时器函数、立即执行函数）调用时，this 的指向永远都是 window
+-   以方法的形式调用时，this 指向调用方法的那个对象
+-   以构造函数的形式调用时，this 指向实例对象
+-   以事件绑定函数的形式调用时，this 指向绑定事件的对象
+-   使用 call 和 apply 调用时，this 指向指定的那个对象
+-   箭头函数不会创建自己的 this,它只会从自己的作用域链的上一层继承 this，并且绑定定义时的对象，而不是运行时的对象
+
+### 61. 拓展运算符的作用？
+
+-   替代 apply `Math.max(...[args])`、`arr1.push(...arr2)`
+-   复制数组 `const a2 = [...a1]`
+-   合并数组（浅拷贝） `[...arr1,...arr2,...arr3]`
+-   将字符串转为真正的数组 `[...'hello']`
