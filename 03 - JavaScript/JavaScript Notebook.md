@@ -92,6 +92,27 @@
 - 如果参数是原始类型的值，`Object`方法将其转为对应的包装对象的实例；如果参数是一个对象，它总是返回该对象，与`Object`构造函数基本相同，只是语意不同。
 
 - ```js
+  var a = {};
+  var b = {x: 1};
+  Object.setPrototypeOf(a, b);
+  Object.getPrototypeOf(a) === b // true
+  a.x // 1
+  
+  var o1 = {};
+  var o2 = Object.create(o1);
+  var o3 = Object.create(o2);
+  o2.isPrototypeOf(o3) // true
+  o1.isPrototypeOf(o3) // true
+  
+  function copyObject(orig) {
+    return Object.create(
+      Object.getPrototypeOf(orig),
+      Object.getOwnPropertyDescriptors(orig)
+    );
+  }
+  ```
+
+- ```js
   const obj = {
     p1: 123,
     p2: 'word'
@@ -160,7 +181,6 @@
   // 但是可以通过改变原型或者属性为对象的值改变对象
   Object.freeze(obj);
   Object.isFrozen(obj) // true
-  
   ```
 
 ### Array
@@ -486,4 +506,124 @@
   - 对象的键名必须放在双引号里面。
   - 数组或对象最后一个成员的后面，不能加逗号。
 - `JSON`对象是 JavaScript 的原生对象，用来处理 JSON 格式数据。它有两个静态方法：`JSON.stringify()`和`JSON.parse()`。
+
+## 面向对象编程
+
+- 面向对象编程将真实世界各种复杂的关系，抽象为一个个对象，然后由对象之间的分工与合作，完成对真实世界的模拟。每一个对象都是功能中心，具有明确分工，可以完成接受信息、处理数据、发出信息等任务。面向对象编程具有灵活、代码可复用、高度模块化等特点，容易维护和开发，更适合多人合作的大型软件项目。
+
+- `new`命令的原理：
+  1. 创建一个空对象，作为将要返回的对象实例。
+  2. 将这个空对象的原型，指向构造函数的`prototype`属性。
+  3. 将这个空对象赋值给函数内部的`this`关键字。
+  4. 开始执行构造函数内部的代码。如果构造函数内部有`return`语句，而且`return`后面跟着一个对象，`new`命令会返回`return`语句指定的对象；否则，就会不管`return`语句，返回`this`对象。
+
+- 函数内部可以使用`new.target`属性。如果当前函数是`new`命令调用，`new.target`指向当前函数，否则为`undefined`。使用这个属性，可以判断函数调用的时候，是否使用`new`命令。
+- 由于函数可以在不同的运行环境执行，所以需要有一种机制，能够在函数体内部获得当前的运行环境（context），所以，`this`就出现了。`this`就是函数运行时所在的对象。
+- 如果`this`所在的方法不在对象的第一层，这时`this`只是指向当前一层的对象，而不会继承更上面的层。
+- 绑定对象的方法：`call`、`apply`、`bind`。
+- JavaScript 规定，所有对象都有自己的原型对象。一方面，任何一个对象，都可以充当其他对象的原型；另一方面，由于原型对象也是对象，所以它也有自己的原型，因此，就会形成一个“原型链”。读取对象的某个属性时，JavaScript 引擎先寻找对象本身的属性，如果找不到，就到它的原型去找，如果还是找不到，就到原型的原型去找。如果直到最顶层的`Object.prototype`还是找不到，则返回`undefined`。
+- `prototype`对象有一个`constructor`属性，默认指向`prototype`对象所在的构造函数。`constructor`属性的作用是，可以得知某个实例对象，到底是哪一个构造函数产生的。修改原型对象时，一般要同时修改`constructor`属性的指向。
+
+## 异步操作
+
+- 事件循环：JavaScript 运行时，除了一个正在运行的主线程，引擎还提供一个任务队列，里面是各种需要当前程序处理的异步任务（根据异步任务的类型，存在多个任务队列）。主线程首先执行所有的同步任务，等到同步任务全部执行完，就会去看任务队列里面的异步任务。如果满足条件，那么异步任务就重新进入主线程开始执行，这时它就变成同步任务了。一旦任务队列清空，程序就结束执行。
+- 异步操作的模式：
+  - 回调函数
+  - 事件监听
+  - 发布/订阅
+- `setTimeout`和`setInterval`的运行机制，是将指定的代码移出本轮事件循环，等到下一轮事件循环，再检查是否到了指定时间。如果到了，就执行对应的代码；如果不到，就继续等待。所以没有办法保证，`setTimeout`和`setInterval`指定的任务，一定会按照预定时间执行。
+- `setTimeout(f, 0)`可以调整事件的发生顺序。
+- `Promise`中`resolve`函数的作用是将`Promise`实例的状态从“未完成”变为“成功”（即从`pending`变为`fulfilled`），在异步操作成功时调用，并将异步操作的结果，作为参数传递出去。`reject`函数的作用是，将`Promise`实例的状态从“未完成”变为“失败”（即从`pending`变为`rejected`），在异步操作失败时调用，并将异步操作报出的错误，作为参数传递出去。
+
+## DOM
+
+- Node 接口:
+
+  - Node.prototype.nodeType：返回一个整数值，表示节点的类型。（元素节点为1，属性节点为2，文本节点为3）
+  
+  - Node.prototype.nodeName：返回节点的名称。
+  
+  - Node.prototype.nodeValue：返回一个字符串，表示当前节点本身的文本值，该属性可读写。
+  
+  - Node.prototype.textContent：返回当前节点和它的所有后代节点的文本内容。该属性是可读写的，设置该属性的值，会用一个新的文本节点，替换所有原来的子节点，而且自动对 HTML 标签转义，适合用于用户提供的内容。
+  
+  - Node.prototype.baseURI：返回一个字符串，表示当前网页的绝对路径。
+  
+  - Node.prototype.nextSibling：返回紧跟在当前节点后面的第一个同级节点。如果当前节点后面没有同级节点，则返回`null`。可以用来遍历所有子节点。
+  
+  - Node.prototype.previousSibling：返回当前节点前面的、距离最近的一个同级节点。如果当前节点前面没有同级节点，则返回`null`。
+  
+  - Node.prototype.parentNode：返回当前节点的父节点。包括元素节点、文档节点和文档片段节点
+  
+  - Node.prototype.parentElement：返回当前节点的父元素节点。
+  
+  - Node.prototype.firstChild/Node.prototype.lastChild：返回当前元素的第一个/最后一个字节点。
+  
+  - Node.prototype.childNodes：返回一个类似数组的对象（`NodeList`集合），成员包括当前节点的所有子节点。使用该属性可以遍历某个节点的所有子节点。`NodeList`对象是一个动态集合，一旦子节点发生变化，立刻会反映在返回结果之中。
+  
+  - Node.prototype.isConnected：返回一个布尔值，表示当前节点是否在文档之中。
+  
+  - Node.prototype.appendChild()：接受一个节点对象作为参数，将其作为最后一个子节点，插入当前节点，返回值就是插入文档的子节点。
+  
+  - Node.prototype.hasChildNodes()：返回一个布尔值，表示当前节点是否有子节点。
+  
+  - Node.prototype.cloneNode()：用于克隆一个节点，接受一个布尔值作为参数，表示是否同时克隆子节点，返回值是一个克隆出来的新节点。保留`id`，`name`等属性，不保留监听事件。
+  
+  - Node.prototype.insertBefore()：用于将某个节点插入父节点内部的指定位置。
+  
+    ```js
+    const insertedNode = parentNode.insertBefore(newNode, referenceNode);
+    ```
+  
+  - Node.prototype.removeChild()：接受一个子节点作为参数，用于从当前节点移除该子节点。返回值是移除的子节点。
+  
+  - Node.prototype.replaceChild()：用于将一个新的节点替换当前节点的某一个子节点。
+  
+    ```js
+    const replacedNode = parentNode.replaceChild(newChild, oldChild);
+    ```
+  
+  - Node.prototype.contains()：返回一个布尔值，表示参数节点是否满足以下三个条件之一：参数节点为当前节点；参数节点为当前节点的子节点；参数节点为当前节点的后代节点。
+  
+- ParentNodes 接口：
+
+  - ParentNode.children：返回一个`HTMLCollection`实例，成员是当前节点的所有元素子节点。该属性只读。
+  
+- ParentNode.firstElementChild：返回当前节点的第一个元素子节点。
+  - ParentNode.lastElementChild：返回当前节点的最后一个元素子节点。
+  - ParentNode.childElementCount：返回一个整数，表示当前节点的所有元素子节点的数目。
+  - ParentNode.append()：为当前节点追加一个或多个子节点，位置是最后一个元素子节点的后面。
+  - ParentNode.prepend()：为当前节点追加一个或多个子节点，位置是第一个元素子节点的前面。
+  
+- ChildNode 接口：
+
+  - ChildNode.remove()：从父节点移除当前节点。
+  - ChildNode.before()：用于在当前节点的前面，插入一个或多个同级节点。两者拥有相同的父节点。
+  - ChildNode.after()：用于在当前节点的后面，插入一个或多个同级节点，两者拥有相同的父节点。
+  - ChildNode.replaceWith()：使用参数节点，替换当前节点。
+  
+- Document 节点
+
+  - document.activeElement：返回获得当前焦点（focus）的 DOM 元素。
+- document.fullscreenElement：返回当前以全屏状态展示的 DOM 元素。
+  - document.title：返回当前文档的标题，可写。
+- document.referrer：返回一个字符串，表示当前文档的访问者来自哪里。
+  - document.hidden：返回一个布尔值，表示当前页面是否可见。如果窗口最小化、浏览器切换了 Tab，都会导致导致页面不可见，使得`document.hidden`返回`true`。
+- document.visibilityState：返回文档的可见状态。
+  
+  - `visible`：页面可见。页面可能是部分可见，即不是焦点窗口，前面被其他窗口部分挡住了。
+    - `hidden`：页面不可见，有可能窗口最小化，或者浏览器切换到了另一个 Tab。
+  - `prerender`：页面处于正在渲染状态，对于用户来说，该页面不可见。
+    - `unloaded`：页面从内存里面卸载了。
+- document.querySelector()，document.querySelectorAll()：接受一个 CSS 选择器作为参数，返回匹配该选择器的元素节点。不支持 CSS 伪元素的选择器。
+  - document.getElementsByTagName()
+  - document.getElementsByClassName() 
+  - document.getElementsByName()
+  - document.getElementById()
+- document.createElement()：参数为元素的标签名，生成元素节点，并返回该节点。
+  - document.createTextNode()：参数为文本节点的内容，生成文本节点，并返回该节点。
+- document.createAttribute()：生成一个新的属性节点，并返回它。
+  - document.addEventListener()，document.removeEventListener()，document.dispatchEvent()
+
+- Element 节点
 
