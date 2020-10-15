@@ -589,7 +589,7 @@
 
   - ParentNode.children：返回一个`HTMLCollection`实例，成员是当前节点的所有元素子节点。该属性只读。
   
-- ParentNode.firstElementChild：返回当前节点的第一个元素子节点。
+   - ParentNode.firstElementChild：返回当前节点的第一个元素子节点。
   - ParentNode.lastElementChild：返回当前节点的最后一个元素子节点。
   - ParentNode.childElementCount：返回一个整数，表示当前节点的所有元素子节点的数目。
   - ParentNode.append()：为当前节点追加一个或多个子节点，位置是最后一个元素子节点的后面。
@@ -605,25 +605,56 @@
 - Document 节点
 
   - document.activeElement：返回获得当前焦点（focus）的 DOM 元素。
-- document.fullscreenElement：返回当前以全屏状态展示的 DOM 元素。
-  - document.title：返回当前文档的标题，可写。
-- document.referrer：返回一个字符串，表示当前文档的访问者来自哪里。
-  - document.hidden：返回一个布尔值，表示当前页面是否可见。如果窗口最小化、浏览器切换了 Tab，都会导致导致页面不可见，使得`document.hidden`返回`true`。
-- document.visibilityState：返回文档的可见状态。
+  - document.fullscreenElement：返回当前以全屏状态展示的 DOM 元素。
   
-  - `visible`：页面可见。页面可能是部分可见，即不是焦点窗口，前面被其他窗口部分挡住了。
+  - document.title：返回当前文档的标题，可写。
+  - document.referrer：返回一个字符串，表示当前文档的访问者来自哪里。
+  
+  - document.hidden：返回一个布尔值，表示当前页面是否可见。如果窗口最小化、浏览器切换了 Tab，都会导致导致页面不可见，使得`document.hidden`返回`true`。
+  - document.visibilityState：返回文档的可见状态。
+  
+    - `visible`：页面可见。页面可能是部分可见，即不是焦点窗口，前面被其他窗口部分挡住了。
     - `hidden`：页面不可见，有可能窗口最小化，或者浏览器切换到了另一个 Tab。
-  - `prerender`：页面处于正在渲染状态，对于用户来说，该页面不可见。
+    - `prerender`：页面处于正在渲染状态，对于用户来说，该页面不可见。
     - `unloaded`：页面从内存里面卸载了。
-- document.querySelector()，document.querySelectorAll()：接受一个 CSS 选择器作为参数，返回匹配该选择器的元素节点。不支持 CSS 伪元素的选择器。
+  - document.querySelector()，document.querySelectorAll()：接受一个 CSS 选择器作为参数，返回匹配该选择器的元素节点。不支持 CSS 伪元素的选择器。
   - document.getElementsByTagName()
   - document.getElementsByClassName() 
   - document.getElementsByName()
   - document.getElementById()
-- document.createElement()：参数为元素的标签名，生成元素节点，并返回该节点。
+  - document.createElement()：参数为元素的标签名，生成元素节点，并返回该节点。
+  
   - document.createTextNode()：参数为文本节点的内容，生成文本节点，并返回该节点。
-- document.createAttribute()：生成一个新的属性节点，并返回它。
+  - document.createAttribute()：生成一个新的属性节点，并返回它。
+  
   - document.addEventListener()，document.removeEventListener()，document.dispatchEvent()
-
+  
 - Element 节点
+
+  - Element.id：返回指定元素的`id`属性，该属性可读写。
+  - Element.draggable：返回一个布尔值，表示当前元素是否可拖动。该属性可读写。
+  
+  - Element.title：用来读写当前元素的 HTML 属性`title`。
+  - Element.attributes：返回一个类似数组的对象，成员是当前元素节点的所有属性节点。
+  
+  - Element.className：读写当前元素节点的`class`属性。
+  - Element.dataset：可以自定义`data-`属性，用来添加数据。
+  
+  - Element.innerHTML：返回一个字符串，等同于该元素包含的所有 HTML 代码。
+  - Element.outerHTML：返回一个字符串，表示当前元素节点的所有 HTML 代码，包括该元素本身和所有子元素。
+  
+  - Element.clientHeight，Element.clientWidth ：包含内容和`padding`部分，不包含滚动条，只对块级元素生效。
+  - Element.clientLeft，Element.clientTop：只包括边框的宽度。
+  
+  - Element.scrollHeight，Element.scrollWidth：包括溢出容器、当前不可见的部分。包括`padding`，伪元素，但是不包括`border`、`margin`以及水平滚动条的高度。
+  - Element.scrollLeft，Element.scrollTop：滚动条滚动的像素数量。
+  
+  - Element.offsetParent：返回最靠近当前元素的、并且 CSS 的`position`属性不等于`static`的上层元素。
+  - Element.offsetHeight，Element.offsetWidth：包括元素本身的高度、padding 和 border，以及滚动条的高度。
+  
+  - Element.offsetLeft，Element.offsetTop：返回当前元素左上角相对于`Element.offsetParent`节点的水平位移/垂直位移
+  - Element.style：行内样式信息
+  - Element.firstElementChild，Element.lastElementChild
+  
+  - Element.nextElementSibling，Element.previousElementSibling
 
