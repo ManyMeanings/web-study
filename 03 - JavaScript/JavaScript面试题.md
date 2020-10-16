@@ -49,6 +49,7 @@
 	- [48. 函数预编译的步骤](#48-函数预编译的步骤)
 	- [49. 函数中 this 的指向](#49-函数中-this-的指向)
 	- [50. 拓展运算符的作用？](#50-拓展运算符的作用)
+	- [51. 实现一个深拷贝](#51-实现一个深拷贝)
 - [React](#react)
 	- [1. 16 版本的 React 生命周期有哪些？](#1-16-版本的-react-生命周期有哪些)
 	- [2. setState 是同步的还是异步的？](#2-setstate-是同步的还是异步的)
@@ -671,6 +672,25 @@ function fn(a) {
 -   复制数组 `const a2 = [...a1]`
 -   合并数组（浅拷贝） `[...arr1,...arr2,...arr3]`
 -   将字符串转为真正的数组 `[...'hello']`
+
+### 51. 实现一个深拷贝
+
+```js
+function deepCopy(p, c) {
+	var c = c || {};
+
+	for (var i in p) {
+		if (typeof p[i] === 'object') {
+			c[i] = p[i].constructor === Array ? [] : {};
+			deepCopy(p[i], c[i]);
+		} else {
+			c[i] = p[i];
+		}
+	}
+
+	return c;
+}
+```
 
 ## React
 
