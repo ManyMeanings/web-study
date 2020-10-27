@@ -14,6 +14,7 @@
 - [14. `<img>`的`title`和`alt`属性有什么区别？](#14-img的title和alt属性有什么区别)
 - [15. 渐进增强和优雅降级的定义](#15-渐进增强和优雅降级的定义)
 - [16. `<input>`标签中 disabled 和 readonly 的区别？](#16-input标签中-disabled-和-readonly-的区别)
+- [17. viewport 相关属性？](#17-viewport-相关属性)
 
 ### 1. DOCTYPE 的作用是什么？&#10084;
 
@@ -67,6 +68,10 @@ XHTML 和 HTML 没有本质的区别，但是相比 HTML 更严格，例如标�
 -   离线存储：manifest
 -   Web 存储：localStorage，sessionStorage
 -   WebSocket：全双工通讯
+-   多任务：webworker
+-   历史管理：history
+-   页面可见性事件：visibilitychange
+-   跨窗口通信：postMessage
 
 移除的元素有：
 
@@ -170,3 +175,18 @@ disabled 指当 input 元素加载时禁用此元素。input 内容不会随着�
 readonly 规定输入字段为只读。input 内容会随着表单提交。
 
 无论设置 readonly 还是 disabled，通过 js 脚本都能更改 input 的 value。
+
+### 17. viewport 相关属性？
+
+```html
+<meta
+	name="viewport"
+	content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+/>
+// width 设置viewport宽度，为一个正整数，或字符串‘device-width’ // device-width
+设备宽度 // height
+设置viewport高度，一般设置了宽度，会自动解析出高度，可以不用设置 //
+initial-scale 默认缩放比例（初始缩放比例），为一个数字，可以带小数 //
+minimum-scale 允许用户最小缩放比例，为一个数字，可以带小数 // maximum-scale
+允许用户最大缩放比例，为一个数字，可以带小数 // user-scalable 是否允许手动缩放
+```

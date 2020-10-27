@@ -40,7 +40,8 @@
 - [40. 什么是包含块？](#40-什么是包含块)
 - [41. 绝对定位元素与非绝对定位元素的百分比计算的区别](#41-绝对定位元素与非绝对定位元素的百分比计算的区别)
 - [42. 不使用 border 画出 1px 高的线](#42-不使用-border-画出-1px-高的线)
-- [43.](#43)
+- [43. css3 动画相关属性？](#43-css3-动画相关属性)
+- [44. margin 变化的参考线？](#44-margin-变化的参考线)
 
 ### 1. 介绍一下 CSS 的盒子模型？&#10084;
 
@@ -312,7 +313,7 @@ BFC 指的是块级格式化上下文，一个元素形成了 BFC 之后，那�
 
 特点：
 
--   BFC 内部的子元素，在竖直方向边距会发生重叠。
+-   BFC 内部的子元素，竖直方向 margin 会重叠。
 -   BFC 在页面中是独立的容器，外面的元素不会影响里面的元素，反之亦然。
 -   BFC 区域不与旁边的浮动区域区域重叠。（可以用来清除浮动带来的影响）。
 -   在计算 BFC 的高度时，浮动子元素的高度的也会参与计算。
@@ -323,6 +324,12 @@ BFC 元素：
 -   浮动元素 float ＝ left|right 或 inherit（≠none）
 -   绝对定位元素 position ＝ absolute 或 fixed
 -   非块级盒子的块级容器 display ＝ inline-block|flex|inline-flex|table-cell 或 table-caption
+
+开发中的应用：
+
+-   阻止 margin 重叠。
+-   清除内部元素的浮动影响。
+-   阻止元素被浮动元素覆盖。
 
 ### 18. CSS 优化、提高性能的方法有哪些？&#10084;
 
@@ -494,6 +501,20 @@ scrollWidth/scrollHeight 返回值包含 content + padding + 溢出内容的尺�
 -   隔墙法：用`<div style="clear: both"></div>`隔开两个浮动的元素。
 -   内墙法：在浮动元的父元素里修一堵墙`<div style="clear: both"></div>`，使该元素被子元素撑出高度。
 -   给浮动元素的父元素设置属性`overflow: hidden;`。
+-   加一个 clearfix 类
+
+```css
+.clearfix:after {
+	content: '.';
+	display: block;
+	height: 0;
+	visibility: hidden;
+	clear: both;
+}
+.clearfix {
+	*zoom: 1; /* 解决ie6，ie7的兼容问题*/
+}
+```
 
 ### 38. 标准文档流的特性？
 
@@ -505,10 +526,11 @@ scrollWidth/scrollHeight 返回值包含 content + padding + 溢出内容的尺�
 
 高度已知，左右宽度固定，中间自适应。
 
-1. 浮动：左侧设置左浮动，右侧设置右浮动，中间自动适应，注意三个 div 的顺序为“左右中”
-2. 绝对定位：左侧绝对定位`left: 0`，右侧也绝对定位`right: 0`，中间绝对定位，左右设置为宽度即可
-3. flex 布局：左右设置宽度，中间`flex: 1`
-4. 网格布局：如下
+1. 流体布局：左侧设置左浮动，右侧设置右浮动，中间不浮动，设置左右边距为边栏的宽度，注意三个 div 的顺序为“左右中”
+2. BFC 布局：方案与第一种类似，中间设置为 BFC，不需要设置左右边距
+3. 绝对定位：左侧绝对定位`left: 0`，右侧也绝对定位`right: 0`，中间绝对定位，左右设置为宽度即可
+4. flex 布局：左右设置宽度，中间`flex-grow: 1`
+5. 网格布局：如下
 
 ```css
 .left-center-right {
@@ -539,3 +561,14 @@ scrollWidth/scrollHeight 返回值包含 content + padding + 溢出内容的尺�
 ```css
 <div style="height:1px;overflow:hidden;background:red"></div>
 ```
+
+### 43. css3 动画相关属性？
+
+-   依靠 CSS3 中提出的三个属性：transition、transform、animation
+-   transition：定义了元素在变化过程中是怎么样的，包含 transition-property、transition-duration、transition-timing-function、transition-delay。
+-   transform：定义元素的变化结果，包含 rotate、scale、skew、translate。
+-   animation：动画定义了动作的每一帧（@keyframes）有什么效果，包括 animation-name，animation-duration、animation-timing-function、animation-delay、animation-iteration-count、animation-direction
+
+### 44. margin 变化的参考线？
+
+margin-top、margin-left 以 margin 外边缘为参考线；margin-bottom、margin-right 以 border 为参考线（正负值都是如此）。
