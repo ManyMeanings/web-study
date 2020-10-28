@@ -52,6 +52,7 @@
 	- [51. 实现一个深拷贝](#51-实现一个深拷贝)
 	- [52. 实现对某个元素的拖拽功能](#52-实现对某个元素的拖拽功能)
 	- [53. Javascript 全局函数和全局变量](#53-javascript-全局函数和全局变量)
+	- [54. `typeof`类型判断的结果](#54-typeof类型判断的结果)
 - [框架/库相关](#框架库相关)
 	- [1. 什么是 postcss？](#1-什么是-postcss)
 	- [2. 什么是 webpack？](#2-什么是-webpack)
@@ -97,6 +98,11 @@ undefined 和 null 都是基本数据类型，undefined 代表的含义是未定
 当我们访问一个对象的属性时，如果这个对象内部不存在这个属性，那么它就会去它的原型对象里找这个属性，这个原型对象又会有自己的原型，于是就这样一直找下去，也就是原型链的概念。原型链的尽头一般来说都是`Object.prototype` 所以这就是我们新建的对象为什么能够使用`toString()`等方法的原因。
 
 JavaScript 对象是通过引用来传递的，我们创建的每个新对象实体中并没有一份属于自己的原型副本。当我们修改原型时，与之相关的对象也会继承这一改变。
+
+**判断对象类型的方法：**
+
+-   `instanceof`可以正确的判断对象的类型，因为内部机制是通过判断对象的原型链中是不是能找到类型的 prototype
+-   可以通过`Object.prototype.toString.call(xx)`。这样我们就可以获得类似`[object Type]`的字符串。
 
 ### 6. 在 js 中不同进制数字的表示方式?
 
@@ -735,6 +741,21 @@ function deepCopy(p, c) {
 -   parseInt() 解析一个字符串并返回一个整数。
 -   String() 把对象的值转换为字符串。
 -   unescape() 对由 escape() 编码的字符串进行解码
+
+### 54. `typeof`类型判断的结果
+
+```js
+typeof 1; // 'number'
+typeof '1'; // 'string'
+typeof undefined; // 'undefined'
+typeof null; // 特殊情况，结果为'object'
+typeof true; // 'boolean'
+typeof Symbol(); // 'symbol'
+typeof []; // 'object'
+typeof {}; // 'object'
+typeof console.log; // 'function'
+typeof b; // b 没有声明，但是还会显示 undefined
+```
 
 ## 框架/库相关
 

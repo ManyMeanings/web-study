@@ -134,6 +134,13 @@ sessionStorage 是 html5 提供的一种浏览器本地存储的方法，它借�
 
 localStorage 也是 html5 提供的一种浏览器本地存储的方法，它一般也能够存储 **5M 或者更大的数据**。它和 sessionStorage 不同的是，**除非手动删除它，否则它不会失效**，并且 localStorage 也只能被**同源页面**所访问共享。
 
+**cookies 的安全属性：**
+
+-   value：如果用于保存用户登录态，应该将该值加密，不能使用明文的用户标识
+-   http-only：不能通过 JS 访问 Cookie，减少 XSS 攻击
+-   secure：只能在协议为 HTTPS 的请求中携带
+-   same-site：规定浏览器不能在跨域请求中携带 Cookie，减少 CSRF 攻击
+
 ### 11. iframe 有哪些缺点？
 
 -   iframe 会阻塞主页面的 onload 事件。window 的 onload 事件需要在所有 iframe 加载完毕后（包含里面的元素）才会触发。
