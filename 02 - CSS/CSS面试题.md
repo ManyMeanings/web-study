@@ -530,7 +530,9 @@ scrollWidth/scrollHeight 返回值包含 content + padding + 溢出内容的尺�
 2. BFC 布局：方案与第一种类似，中间设置为 BFC，不需要设置左右边距
 3. 绝对定位：左侧绝对定位`left: 0`，右侧也绝对定位`right: 0`，中间绝对定位，左右设置为宽度即可
 4. flex 布局：左右设置宽度，中间`flex-grow: 1`
-5. 网格布局：如下
+5. 圣杯布局：利用左浮动，负 margin 和相对定位，容器需设为 BFC 撑开高度（overflow: hidden）
+6. 双飞翼布局：相比圣杯布局不使用定位，在 middle 的 div 里又插入一个 div，通过调整内部 div 的 margin 值，实现中间栏自适应
+7. 网格布局：如下
 
 ```css
 .left-center-right {

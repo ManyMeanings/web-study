@@ -748,7 +748,7 @@ function deepCopy(p, c) {
 typeof 1; // 'number'
 typeof '1'; // 'string'
 typeof undefined; // 'undefined'
-typeof null; // 特殊情况，结果为'object'
+typeof null; // 结果为'object'，历史遗留问题
 typeof true; // 'boolean'
 typeof Symbol(); // 'symbol'
 typeof []; // 'object'
